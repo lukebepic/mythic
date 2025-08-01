@@ -1,0 +1,8 @@
+{%- comment -%}
+Advanced collection grid with dynamic or masonry layout
+{%- endcomment -%}
+<div class="collection-grid-advanced">
+  {% for product in collection.products %}
+    <div class="grid-item">{{ product.title }}</div>
+  {% endfor %}
+</div>

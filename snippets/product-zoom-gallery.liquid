@@ -1,0 +1,8 @@
+{%- comment -%}
+Product gallery with zoom on hover or click
+{%- endcomment -%}
+<div class="product-zoom-gallery">
+  {% for image in product.images %}
+    <div class="zoomable" style="background-image:url('{{ image | img_url: '800x' }}')"></div>
+  {% endfor %}
+</div>

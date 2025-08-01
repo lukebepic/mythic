@@ -1,0 +1,15 @@
+{%- comment -%}
+Quick order table for B2B or bulk shopping
+{%- endcomment -%}
+<table class="quick-order-table">
+  <tr><th>Product</th><th>SKU</th><th>Qty</th><th>Add</th></tr>
+  <!-- Loop collection.products for fast orders -->
+  {% for product in collection.products %}
+    <tr>
+      <td>{{ product.title }}</td>
+      <td>{{ product.variants.first.sku }}</td>
+      <td><input type="number" min="1" value="1"></td>
+      <td><button>Add</button></td>
+    </tr>
+  {% endfor %}
+</table>

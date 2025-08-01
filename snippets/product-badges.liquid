@@ -1,0 +1,16 @@
+{%- comment -%}
+Product badges: shows 'New', 'Sale', or custom badges on product cards or PDP
+{%- endcomment -%}
+<div class="product-badges">
+  {% if product.tags contains 'New' %}
+    <span class="badge badge--new">New</span>
+  {% endif %}
+  {% if product.compare_at_price > product.price %}
+    <span class="badge badge--sale">Sale</span>
+  {% endif %}
+  {% for badge in product.metafields.custom.badges.value | split: ',' %}
+    {% if badge != blank %}
+      <span class="badge badge--custom">{{ badge }}</span>
+    {% endif %}
+  {% endfor %}
+</div>

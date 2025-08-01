@@ -1,1 +1,7 @@
-<div>Product Gallery Snippet</div>
+<div class="product-gallery">
+  {% for media in product.media %}
+    <div class="product-gallery__item">
+      {{ media | media_tag: image_size: "800x", class: "product-media", loading: "lazy" }}
+    </div>
+  {% endfor %}
+</div>

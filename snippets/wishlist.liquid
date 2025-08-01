@@ -1,0 +1,25 @@
+{%- comment -%}
+Wishlist: Add/remove products, persists to localStorage, accessible.
+{%- endcomment -%}
+<button class="wishlist-btn" data-product="{{ product.id }}" aria-pressed="false" aria-label="Add to wishlist">♡</button>
+<script>
+(function() {
+  var btns = document.querySelectorAll('.wishlist-btn');
+  var wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+  btns.forEach(function(btn) {
+    var id = btn.getAttribute('data-product');
+    if (wishlist.includes(id)) btn.setAttribute('aria-pressed', 'true');
+    btn.addEventListener('click', function() {
+      var pressed = btn.getAttribute('aria-pressed') === 'true';
+      if (pressed) {
+        wishlist = wishlist.filter(function(pid) { return pid !== id; });
+        btn.setAttribute('aria-pressed', 'false');
+      } else {
+        wishlist.push(id);
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    });
+  });
+})();
+</script>

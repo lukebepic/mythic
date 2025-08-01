@@ -1,0 +1,83 @@
+{%- comment -%}
+Advanced collection filters with support for tags, vendors, price, and metafields.
+AJAX-enhanced but gracefully degrades if JS is disabled.
+{%- endcomment -%}
+<form id="CollectionFiltersAdvanced" class="collection-filters" method="get" action="{{ collection.url }}">
+  <fieldset>
+    <legend>Filter By</legend>
+
+    <!-- Tag Filters -->
+    <div class="filter-group filter-tags">
+      <label>Tags</label>
+      {% assign all_tags = collection.all_tags %}
+      {% for tag in all_tags %}
+        <label>
+          <input type="checkbox" name="filter.v.tag" value="{{ tag | escape }}" {% if current_tags contains tag %}checked{% endif %}>
+          {{ tag }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <!-- Vendor Filters -->
+    <div class="filter-group filter-vendors">
+      <label>Vendor</label>
+      <select name="filter.v.vendor">
+        <option value="">All Vendors</option>
+        {% for product in collection.products %}
+          {% assign vendor = product.vendor %}
+          {% unless vendors contains vendor %}
+            {% assign vendors = vendors | append: ',' | append: vendor %}
+            <option value="{{ vendor | escape }}" {% if current_vendor == vendor %}selected{% endif %}>{{ vendor }}</option>
+          {% endunless %}
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Price Filters -->
+    <div class="filter-group filter-price">
+      <label>Price</label>
+      <input type="number" name="filter.v.price_min" placeholder="Min" min="0" value="{{ request.params.filter.v.price_min }}">
+      <input type="number" name="filter.v.price_max" placeholder="Max" min="0" value="{{ request.params.filter.v.price_max }}">
+    </div>
+
+    <!-- Metafield Filters (example: product.metafields.custom.material) -->
+    <div class="filter-group filter-metafields">
+      <label>Material</label>
+      <select name="filter.v.material">
+        <option value="">All</option>
+        {% assign materials = '' %}
+        {% for product in collection.products %}
+          {% assign material = product.metafields.custom.material %}
+          {% if material != blank %}
+            {% unless materials contains material %}
+              {% assign materials = materials | append: ',' | append: material %}
+              <option value="{{ material | escape }}" {% if request.params.filter.v.material == material %}selected{% endif %}>{{ material }}</option>
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit">Apply Filters</button>
+  </fieldset>
+</form>
+
+<script>
+  // Optional AJAX handler: submit filters without page reload
+  document.getElementById('CollectionFiltersAdvanced')?.addEventListener('submit', function(e){
+    if(window.fetch && window.history && document.querySelector('.collection-grid-advanced')) {
+      e.preventDefault();
+      const form = e.target;
+      const params = new URLSearchParams(new FormData(form)).toString();
+      fetch(form.action + '?' + params, {headers: {'X-Requested-With':'XMLHttpRequest'}})
+        .then(r=>r.text()).then(html=>{
+          // Replace collection grid with new filtered HTML
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const newGrid = doc.querySelector('.collection-grid-advanced');
+          if(newGrid) document.querySelector('.collection-grid-advanced').replaceWith(newGrid);
+        });
+      // Optionally update filter chips, URL, etc.
+    }
+  });
+</script>

@@ -1,1 +1,16 @@
-<div>Product Main Section</div>
+<!-- Product Page Layout -->
+<div class="product-page">
+  <h1>{{ product.title }}</h1>
+  <div class="product-images">
+    {% include 'product-gallery' %}
+  </div>
+  <div class="product-info">
+    {% include 'product-info' %}
+  </div>
+  <div class="product-tabs">
+    {% include 'product-tabs' %}
+  </div>
+  <div class="product-recommendations">
+    {% include 'product-recommendations' %}
+  </div>
+</div>

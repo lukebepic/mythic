@@ -1,0 +1,38 @@
+{%- comment -%}
+AJAX cart functionality for updating cart without page reload.
+{%- endcomment -%}
+<script>
+(function() {
+  function fetchCart(callback) {
+    fetch('/cart.js').then(r=>r.json()).then(callback);
+  }
+  function updateCart(data) {
+    document.querySelectorAll('.cart-mini__subtotal').forEach(function(el) {
+      el.textContent = 'Subtotal: ' + Shopify.formatMoney(data.total_price);
+    });
+    // Add more DOM updates as needed
+  }
+  document.body.addEventListener('click', function(e) {
+    if (e.target.matches('.btn-atc')) {
+      e.preventDefault();
+      var form = e.target.closest('form');
+      var fd = new FormData(form);
+      fetch('/cart/add.js', { method: 'POST', body: fd })
+        .then(()=>fetchCart(updateCart));
+      document.getElementById('cart-mini').style.display = 'block';
+    }
+    if (e.target.matches('.cart-mini__close')) {
+      document.getElementById('cart-mini').style.display = 'none';
+    }
+    if (e.target.matches('.btn-remove[data-key]')) {
+      e.preventDefault();
+      var key = e.target.getAttribute('data-key');
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ id: key, quantity: 0 })
+      }).then(()=>fetchCart(updateCart));
+    }
+  });
+})();
+</script>

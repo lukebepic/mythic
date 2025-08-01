@@ -1,0 +1,14 @@
+{%- comment -%}
+Performance optimizations: lazy loading, prefetching, async scripts.
+{%- endcomment -%}
+<script>
+  // Prefetch product URLs on hover
+  document.body.addEventListener('mouseover', function(e) {
+    if (e.target.tagName === 'A' && e.target.href.includes('/products/')) {
+      var link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = e.target.href;
+      document.head.appendChild(link);
+    }
+  });
+</script>

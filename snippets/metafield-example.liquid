@@ -1,0 +1,8 @@
+{%- comment -%}
+Example usage of product metafields for custom content.
+{%- endcomment -%}
+{% if product.metafields.custom.extra_info %}
+  <div class="product-extra-info">
+    {{ product.metafields.custom.extra_info.value }}
+  </div>
+{% endif %}

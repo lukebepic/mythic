@@ -1,0 +1,13 @@
+{%- comment -%}
+Accessibility hooks for focus management, ARIA, and skip links.
+{%- endcomment -%}
+<a href="#main-content" class="skip-link">Skip to content</a>
+<script>
+  // Focus ring for keyboard navigation
+  document.body.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+  });
+  document.body.addEventListener('mousedown', function() {
+    document.body.classList.remove('user-is-tabbing');
+  });
+</script>

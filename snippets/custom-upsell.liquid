@@ -1,0 +1,18 @@
+{%- comment -%}
+Custom upsell widget: suggests related products, can be used on cart or PDP.
+{%- endcomment -%}
+<div class="custom-upsell">
+  <h3>You might also like</h3>
+  <div class="upsell-products">
+    {% assign related = product.collections[0].products | where: "id", product.id, false | limit: 3 %}
+    {% for related_product in related %}
+      <div class="upsell-product">
+        <a href="{{ related_product.url }}">
+          <img src="{{ related_product.featured_image | image_url: width: 120 }}" alt="{{ related_product.title }}">
+          <span>{{ related_product.title }}</span>
+          <span>{{ related_product.price | money }}</span>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>

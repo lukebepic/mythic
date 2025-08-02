@@ -1,0 +1,23 @@
+{
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you are looking for does not exist."
+    },
+    "search": {
+      "placeholder": "Search the shop"
+    },
+    "newsletter": {
+      "subscribe": "Subscribe for updates"
+    }
+  },
+  "header": {
+    "cart": "Cart",
+    "account": "Account",
+    "search": "Search"
+  },
+  "footer": {
+    "contact": "Contact",
+    "newsletter": "Newsletter"
+  }
+}

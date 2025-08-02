@@ -1,0 +1,34 @@
+{%- comment -%}
+Customer portal: order history, re-order, saved addresses, loyalty dashboard.
+{%- endcomment -%}
+<div class="customer-portal">
+  <h2>Welcome, {{ customer.first_name }}!</h2>
+  <section>
+    <h3>Your Orders</h3>
+    {% for order in customer.orders %}
+      <div class="order-summary">
+        <span>Order #{{ order.name }} — {{ order.created_at | date: "%b %d, %Y" }}</span>
+        <span>{{ order.financial_status_label }}</span>
+        <a href="{{ order.order_status_url }}">View</a>
+        <a href="/account/reorder?order_id={{ order.id }}">Re-order</a>
+      </div>
+    {% endfor %}
+  </section>
+  <section>
+    <h3>Saved Addresses</h3>
+    {% for address in customer.addresses %}
+      <div>
+        {{ address.address1 }}, {{ address.city }}, {{ address.country }}
+      </div>
+    {% endfor %}
+    <a href="/account/addresses">Manage Addresses</a>
+  </section>
+  <section>
+    <h3>Loyalty Dashboard</h3>
+    <div>
+      Points: {{ customer.metafields.loyalty.points | default: 0 }}<br>
+      Tier: {{ customer.metafields.loyalty.tier | default: 'Bronze' }}
+    </div>
+    <a href="/account/loyalty">View Rewards</a>
+  </section>
+</div>

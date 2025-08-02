@@ -1,0 +1,23 @@
+{%- comment -%}
+Accessible contact form with client-side validation.
+{%- endcomment -%}
+<form id="contact-form" class="contact-form" method="post" action="/contact#contact-form">
+  <label for="contact-name">Name</label>
+  <input type="text" id="contact-name" name="contact[name]" required>
+  <label for="contact-email">Email</label>
+  <input type="email" id="contact-email" name="contact[email]" required>
+  <label for="contact-message">Message</label>
+  <textarea id="contact-message" name="contact[body]" required></textarea>
+  <button type="submit">Send</button>
+</form>
+<script>
+document.getElementById('contact-form').onsubmit = function(e) {
+  var name = document.getElementById('contact-name').value.trim();
+  var email = document.getElementById('contact-email').value.trim();
+  var message = document.getElementById('contact-message').value.trim();
+  if (!name || !email || !message) {
+    e.preventDefault();
+    alert('All fields are required.');
+  }
+};
+</script>

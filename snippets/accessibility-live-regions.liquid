@@ -1,0 +1,11 @@
+{%- comment -%}
+ARIA live regions for cart updates, search, or notifications.
+{%- endcomment -%}
+<div id="aria-live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+<script>
+function announce(message) {
+  var region = document.getElementById('aria-live-region');
+  region.textContent = '';
+  setTimeout(function() { region.textContent = message; }, 100);
+}
+</script>

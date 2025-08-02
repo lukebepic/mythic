@@ -1,0 +1,25 @@
+{%- comment -%}
+Age gate modal: blocks site until confirmed, persists in localStorage.
+{%- endcomment -%}
+<div id="age-modal" class="age-modal" role="dialog" aria-modal="true" style="display:none;">
+  <div class="age-modal__content">
+    <p>You must be 18+ to enter. Are you of legal age?</p>
+    <button id="age-yes">Yes, I am over 18</button>
+    <button id="age-no">No</button>
+  </div>
+</div>
+<script>
+(function() {
+  if (localStorage.getItem('ageVerified') !== 'yes') {
+    var modal = document.getElementById('age-modal');
+    modal.style.display = 'block';
+    document.getElementById('age-yes').onclick = function() {
+      localStorage.setItem('ageVerified', 'yes');
+      modal.style.display = 'none';
+    };
+    document.getElementById('age-no').onclick = function() {
+      window.location = 'https://www.google.com/';
+    };
+  }
+})();
+</script>

@@ -1,0 +1,12 @@
+{% comment %} Featured Blog Post Card {% endcomment %}
+{% assign featured = blog.articles.first %}
+{% if featured %}
+  <div class="blog-featured-card">
+    <a href="{{ featured.url }}">
+      {% if featured.image %}<img src="{{ featured.image | img_url: '600x' }}" alt="{{ featured.title }}">{% endif %}
+      <h2>{{ featured.title }}</h2>
+      <div class="blog-meta">{{ featured.author }} &middot; {{ featured.published_at | date: "%b %d, %Y" }}</div>
+      <div class="blog-excerpt">{{ featured.excerpt | strip_html | truncate: 160 }}</div>
+    </a>
+  </div>
+{% endif %}

@@ -1,0 +1,17 @@
+{%- comment -%}
+Developer/Designer mode: Style guide, design tokens, storybook integration.
+{%- endcomment -%}
+{% if customer and customer.tags contains 'developer' %}
+  <div class="dev-mode">
+    <h3>Developer Mode Active</h3>
+    <pre>
+      Design Tokens:
+      --color-primary: {{ settings.color_primary }};
+      --color-accent: {{ settings.color_accent }};
+      --font-heading: {{ settings.font_heading.family }};
+      --font-body: {{ settings.font_body.family }};
+    </pre>
+    <a href="/storybook">Open Storybook UI</a>
+    <a href="/styleguide">View Theme Style Guide</a>
+  </div>
+{% endif %}

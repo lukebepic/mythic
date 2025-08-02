@@ -1,0 +1,35 @@
+{%- comment -%}
+Customizable Checkout Extensions: Add custom fields, upsells, surveys, or incentives in Shopify Checkout (for Checkout Extensibility).
+{%- endcomment -%}
+{% if request.path contains '/checkouts/' %}
+  <div id="custom-checkout-extensions" style="margin:2em 0;">
+    <h3>Enhance Your Checkout</h3>
+    <div style="margin-bottom:1em;">
+      <label>
+        Gift Message:<br>
+        <input type="text" name="gift_message" style="width:100%;" placeholder="Optional message for recipient">
+      </label>
+    </div>
+    <div style="margin-bottom:1em;">
+      <label>
+        <input type="checkbox" name="add_upsell" value="true"> Add a mystery sample for $4.99!
+      </label>
+    </div>
+    <div style="margin-bottom:1em;">
+      <label>
+        Where did you hear about us?<br>
+        <select name="checkout_survey">
+          <option value="">Select</option>
+          <option>Instagram</option>
+          <option>TikTok</option>
+          <option>Friend</option>
+          <option>Google/Search</option>
+          <option>Other</option>
+        </select>
+      </label>
+    </div>
+    <div style="background:#e8ffe8;padding:1em;margin:1em 0;border-radius:7px;">
+      <b>Instant Offer:</b> Use code <kbd>EXTRA5</kbd> for 5% off!
+    </div>
+  </div>
+{% endif %}

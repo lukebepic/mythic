@@ -1,0 +1,24 @@
+{%- comment -%}
+Renders dynamic product metafields/metaobjects as a block.
+{%- endcomment -%}
+<div class="product-metafields">
+  {% if product.metafields.custom.size_guide %}
+    <div class="meta-block">
+      <strong>Size Guide:</strong>
+      <span>{{ product.metafields.custom.size_guide }}</span>
+    </div>
+  {% endif %}
+  {% if product.metafields.custom.material %}
+    <div class="meta-block">
+      <strong>Material:</strong>
+      <span>{{ product.metafields.custom.material }}</span>
+    </div>
+  {% endif %}
+  {% if product.metafields.custom.care %}
+    <div class="meta-block">
+      <strong>Care Instructions:</strong>
+      <span>{{ product.metafields.custom.care }}</span>
+    </div>
+  {% endif %}
+  {% comment %} Add more blocks as needed for your metaobjects/metafields {% endcomment %}
+</div>

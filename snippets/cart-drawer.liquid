@@ -1,0 +1,21 @@
+{%- comment -%}
+AJAX-powered slide-out cart drawer. Trigger with a cart icon or add-to-cart.
+{%- endcomment -%}
+<div id="CartDrawer" class="cart-drawer" aria-modal="true" role="dialog" tabindex="-1" style="display:none;">
+  <button id="CartDrawerClose" class="drawer-close" aria-label="Close">&times;</button>
+  <h2>Your Cart</h2>
+  <div id="CartDrawerContents">
+    {% render 'cart-main', context: 'drawer' %}
+  </div>
+  <a href="/cart" class="cart-link">View Full Cart</a>
+</div>
+<script>
+  document.querySelectorAll('.cart-toggle').forEach(btn => btn.addEventListener('click', () => {
+    document.getElementById('CartDrawer').style.display='block';
+    document.body.classList.add('drawer-open');
+  }));
+  document.getElementById('CartDrawerClose')?.addEventListener('click', () => {
+    document.getElementById('CartDrawer').style.display='none';
+    document.body.classList.remove('drawer-open');
+  });
+</script>

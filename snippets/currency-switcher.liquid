@@ -1,0 +1,19 @@
+{%- comment -%}
+Standalone currency selector (if needed in addition to country selector).
+{%- endcomment -%}
+<form id="CurrencySwitcher" class="currency-switcher">
+  <label for="currency-switch">Currency</label>
+  <select id="currency-switch" name="currency">
+    {% for country in localization.available_countries %}
+      <option value="{{ country.currency.iso_code }}" {% if country.currency.iso_code == localization.country.currency.iso_code %}selected{% endif %}>
+        {{ country.currency.iso_code }}
+      </option>
+    {% endfor %}
+  </select>
+</form>
+<script>
+  document.getElementById('currency-switch')?.addEventListener('change', function() {
+    // Typically handled by Shopify Markets, but you may want to reload:
+    location.reload();
+  });
+</script>

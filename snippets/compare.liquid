@@ -1,0 +1,30 @@
+{%- comment -%}
+Product compare: Add/remove, compare side-by-side.
+{%- endcomment -%}
+<button class="compare-btn" data-product-id="{{ product.id }}">Compare</button>
+<div id="CompareDrawer" class="compare-drawer" style="display:none;">
+  <button onclick="this.parentNode.style.display='none'">Close</button>
+  <div id="CompareList"></div>
+</div>
+<script>
+  // Compare logic: localStorage
+  function getCompare() { return JSON.parse(localStorage.getItem('compare') || '[]'); }
+  function setCompare(arr) { localStorage.setItem('compare', JSON.stringify(arr)); }
+  function renderCompare() {
+    const ids = getCompare();
+    fetch('/apps/compare?ids=' + ids.join(',')) // Custom app or endpoint needed!
+      .then(r=>r.text()).then(html=>{
+        document.getElementById('CompareList').innerHTML = html;
+        document.getElementById('CompareDrawer').style.display = '';
+      });
+  }
+  document.querySelectorAll('.compare-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const id = btn.dataset.productId;
+      let compare = getCompare();
+      if (!compare.includes(id)) compare.push(id);
+      setCompare(compare);
+      renderCompare();
+    });
+  });
+</script>

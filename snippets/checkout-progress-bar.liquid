@@ -1,0 +1,14 @@
+{%- comment -%}
+Checkout progress bar module – shows steps for a multi-step checkout (Shopify Plus feature or custom checkout).
+{%- endcomment -%}
+{% assign current_step = checkout.step %}
+<div class="checkout-progress-bar">
+  <div class="progress-step {% if current_step == 'contact_information' %}active{% endif %}">Contact</div>
+  <div class="progress-step {% if current_step == 'shipping_method' %}active{% endif %}">Shipping</div>
+  <div class="progress-step {% if current_step == 'payment_method' %}active{% endif %}">Payment</div>
+  <div class="progress-indicator" style="width: 
+    {% if current_step == 'contact_information' %}33
+    {% elsif current_step == 'shipping_method' %}66
+    {% else %}100
+    {% endif %}%;"></div>
+</div>

@@ -1,0 +1,20 @@
+{%- comment -%}
+Dynamic product recommendations for the cart.
+{%- endcomment -%}
+{% assign recommendations = cart.items | map: 'product_id' | uniq | join: ',' | recommendations: 4 %}
+{% if recommendations.size > 0 %}
+  <div class="cart-suggestions">
+    <h3>You may also like</h3>
+    <div class="suggestion-list">
+      {% for product in recommendations %}
+        <div class="suggestion-item">
+          <a href="{{ product.url }}">
+            <img src="{{ product.featured_image | img_url: '120x' }}" alt="{{ product.title }}">
+            <div>{{ product.title }}</div>
+            <div class="price">{{ product.price | money }}</div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

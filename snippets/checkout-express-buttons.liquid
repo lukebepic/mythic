@@ -1,0 +1,14 @@
+{%- comment -%}
+Express checkout buttons (Shop Pay, Apple Pay, Google Pay, etc).
+{%- endcomment -%}
+<div class="checkout-express-buttons">
+  {% if shop.enabled_payment_types contains 'shop_pay' %}
+    <button type="button" class="express-btn shop-pay">Shop Pay</button>
+  {% endif %}
+  {% if shop.enabled_payment_types contains 'apple_pay' %}
+    <button type="button" class="express-btn apple-pay">Apple Pay</button>
+  {% endif %}
+  {% if shop.enabled_payment_types contains 'google_pay' %}
+    <button type="button" class="express-btn google-pay">Google Pay</button>
+  {% endif %}
+</div>

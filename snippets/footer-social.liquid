@@ -1,0 +1,12 @@
+{% comment %} Social icons (edit links in theme settings) {% endcomment %}
+<div class="footer-social">
+  {% if settings.social_instagram != blank %}
+    <a href="{{ settings.social_instagram }}" target="_blank">{% render 'icon', name: 'instagram' %}</a>
+  {% endif %}
+  {% if settings.social_facebook != blank %}
+    <a href="{{ settings.social_facebook }}" target="_blank">{% render 'icon', name: 'facebook' %}</a>
+  {% endif %}
+  {% if settings.social_x != blank %}
+    <a href="{{ settings.social_x }}" target="_blank">{% render 'icon', name: 'x' %}</a>
+  {% endif %}
+</div>

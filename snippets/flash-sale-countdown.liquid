@@ -1,0 +1,21 @@
+{%- comment -%}
+Dynamic pricing: Flash sale countdown timer and offer block.
+{%- endcomment -%}
+{% if product.metafields.sale.ends_at %}
+  <div class="flash-sale">
+    <span>Flash Sale Ends In: <span id="flash-timer"></span></span>
+    <span class="sale-price">{{ product.price | times: 0.7 | money }}</span>
+  </div>
+  <script>
+    const endsAt = new Date('{{ product.metafields.sale.ends_at }}');
+    const timer = document.getElementById('flash-timer');
+    function updateTimer() {
+      const now = new Date();
+      const diff = Math.max(0, endsAt - now);
+      const h = Math.floor(diff/1000/60/60), m = Math.floor(diff/1000/60)%60, s = Math.floor(diff/1000)%60;
+      timer.textContent = `${h}h ${m}m ${s}s`;
+      if (diff <= 0) timer.textContent = 'Ended';
+    }
+    setInterval(updateTimer, 1000); updateTimer();
+  </script>
+{% endif %}

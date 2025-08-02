@@ -1,0 +1,20 @@
+{%- comment -%}
+Checkout upsell module – displays an offer to add a product to cart at checkout.
+{%- endcomment -%}
+{% assign upsell_product = all_products[settings.checkout_upsell_product_handle] %}
+{% if upsell_product.available %}
+  <div class="checkout-upsell">
+    <h3>Special Offer</h3>
+    <div class="upsell-product-info">
+      <img src="{{ upsell_product.featured_image | img_url: '200x' }}" alt="{{ upsell_product.title }}">
+      <div>
+        <strong>{{ upsell_product.title }}</strong>
+        <span class="price">{{ upsell_product.price | money }}</span>
+        <form method="post" action="/cart/add">
+          <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+          <button type="submit">Add to Order</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}

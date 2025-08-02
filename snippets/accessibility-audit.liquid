@@ -1,0 +1,24 @@
+{%- comment -%}
+Accessibility auditing: Run axe-core in dev mode, highlight a11y issues.
+{%- endcomment -%}
+{% if customer and customer.tags contains 'developer' %}
+  <script src="https://unpkg.com/axe-core/axe.min.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      axe.run(document, {}, function(err, results) {
+        if (results.violations.length) {
+          alert('Accessibility issues detected: ' + results.violations.length);
+          console.log('Accessibility issues:', results.violations);
+          // Optionally highlight elements with issues
+          results.violations.forEach(v => {
+            v.nodes.forEach(n => {
+              n.target.forEach(sel => {
+                try { document.querySelector(sel).style.outline = '2px solid red'; } catch(e){}
+              });
+            });
+          });
+        }
+      });
+    });
+  </script>
+{% endif %}

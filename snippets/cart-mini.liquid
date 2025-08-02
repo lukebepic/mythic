@@ -1,0 +1,23 @@
+<aside class="cart-mini" id="cart-mini" style="display:none;">
+  <div class="cart-mini__header">
+    <h3>Your cart</h3>
+    <button class="cart-mini__close" aria-label="Close">&times;</button>
+  </div>
+  <div class="cart-mini__items">
+    {% for item in cart.items %}
+      <div class="cart-mini__item">
+        <a href="{{ item.url }}"><img src="{{ item.image | img_url: '80x' }}" alt="{{ item.title }}"></a>
+        <div>
+          <span>{{ item.product.title }}</span>
+          <span>{{ item.price | money }} × {{ item.quantity }}</span>
+        </div>
+        <button class="btn-remove" data-key="{{ item.key }}">Remove</button>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="cart-mini__footer">
+    <div class="cart-mini__subtotal">Subtotal: {{ cart.total_price | money }}</div>
+    <a href="/cart" class="btn">View cart</a>
+    <a href="/checkout" class="btn btn-checkout">Checkout</a>
+  </div>
+</aside>

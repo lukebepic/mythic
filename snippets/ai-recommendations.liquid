@@ -1,0 +1,22 @@
+{%- comment -%}
+AI-powered product recommendations and dynamic content.
+{%- endcomment -%}
+<div id="ai-recommendations" class="ai-recs">
+  <h3>Recommended for You</h3>
+  <div id="ai-recs-list">
+    <!-- Populated by AI -->
+  </div>
+</div>
+<script>
+  // Example: Call external AI service (replace URL with your AI endpoint or use Shopify's recommended APIs)
+  fetch('https://api.your-ai-service.com/recommendations?shopper={{ customer.id | default: "guest" }}')
+    .then(r=>r.json()).then(data=>{
+      const recs = document.getElementById('ai-recs-list');
+      recs.innerHTML = data.products.map(
+        p => `<a class="ai-rec-item" href="${p.url}">
+                <img src="${p.image}" alt="${p.title}" />
+                <span>${p.title}</span>
+              </a>`
+      ).join('');
+    });
+</script>

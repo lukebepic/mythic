@@ -1,0 +1,13 @@
+{%- comment -%}
+Country/currency selector. Integrates with Shopify Markets.
+{%- endcomment -%}
+<form id="CountrySelector" class="localization-country-selector" action="{{ localization.country.root_url }}" method="get">
+  <label for="country-switch">Country</label>
+  <select name="country_code" id="country-switch" onchange="this.form.submit()">
+    {% for country in localization.available_countries %}
+      <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+        {{ country.name }} ({{ country.currency.iso_code }})
+      </option>
+    {% endfor %}
+  </select>
+</form>

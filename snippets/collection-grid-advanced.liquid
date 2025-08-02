@@ -1,0 +1,23 @@
+{%- comment -%}
+Advanced collection grid: responsive, with support for masonry, quick add, and promo banners.
+{%- endcomment -%}
+<div class="collection-grid-advanced {% if settings.grid_masonry %}masonry{% endif %}">
+  {% for product in collection.products %}
+    <div class="product-card">
+      <a href="{{ product.url }}">
+        <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.title }}">
+        <div class="product-info">
+          <h3>{{ product.title }}</h3>
+          <div class="price">{{ product.price | money }}</div>
+          {% render 'product-badges', product: product %}
+        </div>
+      </a>
+      {% render 'collection-quick-add', product: product %}
+    </div>
+    {% if forloop.index == 3 and collection.metafields.custom.promo_banner != blank %}
+      <div class="promo-banner">
+        {{ collection.metafields.custom.promo_banner }}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

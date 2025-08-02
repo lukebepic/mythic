@@ -1,0 +1,27 @@
+{%- comment -%}
+In-theme A/B Testing Framework: Simple split-testing for sections/blocks, with reporting (requires analytics endpoint).
+{%- endcomment -%}
+{% assign ab_variant = 'A' %}
+{% if request.query.ab_variant == 'B' or customer and customer.tags contains 'ab-b' %}
+  {% assign ab_variant = 'B' %}
+{% endif %}
+<div class="ab-test ab-variant-{{ ab_variant }}">
+  {% if ab_variant == 'A' %}
+    <div>Variant A: Standard Hero Section</div>
+    <!-- Place standard section code here -->
+  {% else %}
+    <div>Variant B: Promotional Hero Section</div>
+    <!-- Place alternate/test section code here -->
+  {% endif %}
+</div>
+<script>
+fetch('https://YOUR_ANALYTICS_ENDPOINT/ab-track', {
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({
+    variant: '{{ ab_variant }}',
+    path: window.location.pathname,
+    customer: '{{ customer.email | default: "guest" }}'
+  })
+});
+</script>

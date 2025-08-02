@@ -1,0 +1,9 @@
+{%- comment -%}
+Dynamic translation helper; use for multi-language support with translation keys.
+{%- endcomment -%}
+{% comment %} Usage: {% render 'localization-dynamic-translation', key: 'products.add_to_cart' %} {% endcomment %}
+{% assign translations = shop.metafields.localization.translations %}
+{% assign tkey = key | default: 'general.missing_translation' %}
+<span class="translation" data-key="{{ tkey }}">
+  {{ translations[tkey] | default: tkey | replace: '_', ' ' | capitalize }}
+</span>

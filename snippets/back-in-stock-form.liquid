@@ -1,1 +1,10 @@
-<div>Back In Stock Form Snippet</div>
+{% comment %}
+  Back in stock notification form
+{% endcomment %}
+{% if product.available == false %}
+  <form class="back-in-stock-form">
+    <label for="back-in-stock-email">Get notified when available:</label>
+    <input type="email" id="back-in-stock-email" name="email" placeholder="Your email" required>
+    <button type="submit" class="btn">Notify Me</button>
+  </form>
+{% endif %}

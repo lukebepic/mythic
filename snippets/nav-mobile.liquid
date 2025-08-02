@@ -1,0 +1,15 @@
+{% comment %} Mobile navigation (with nesting) {% endcomment %}
+<ul class="nav-mobile-list">
+  {% for link in linklists.main-menu.links %}
+    <li>
+      <a href="{{ link.url }}">{{ link.title }}</a>
+      {% if link.links.size > 0 %}
+        <ul class="nav-mobile-sub">
+          {% for child in link.links %}
+            <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,22 @@
+{%- comment -%}
+Multi-message, scheduled, and dismissible announcement bar.
+{%- endcomment -%}
+<div id="AnnouncementBar" class="announcement-bar" {% if settings.announcement_enabled == false %}style="display:none;"{% endif %}>
+  {% assign messages = settings.announcement_messages | split: '|' %}
+  <span id="AnnouncementMsg">{{ messages[0] }}</span>
+  <button id="AnnouncementClose" aria-label="Close">&times;</button>
+</div>
+<script>
+  // Rotate messages and allow dismiss
+  const msgs = {{ settings.announcement_messages | json }};
+  let idx = 0;
+  setInterval(() => {
+    idx = (idx + 1) % msgs.length;
+    document.getElementById('AnnouncementMsg').textContent = msgs[idx];
+  }, 5000);
+  document.getElementById('AnnouncementClose').onclick = () => {
+    document.getElementById('AnnouncementBar').style.display = 'none';
+    localStorage.setItem('announceBarDismissed', '1');
+  };
+  if(localStorage.getItem('announceBarDismissed')==='1') document.getElementById('AnnouncementBar').style.display='none';
+</script>

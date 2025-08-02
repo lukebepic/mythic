@@ -1,0 +1,23 @@
+{%- comment -%}
+Mobile navigation menu with accessibility hooks.
+{%- endcomment -%}
+<nav class="mobile-nav" aria-label="Mobile menu">
+  <button class="mobile-nav__toggle" aria-expanded="false" aria-controls="mobile-nav-menu">Menu</button>
+  <ul class="mobile-nav__menu" id="mobile-nav-menu" hidden>
+    {% for link in linklists.main-menu.links %}
+      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+<script>
+(function() {
+  var toggle = document.querySelector('.mobile-nav__toggle');
+  var menu = document.getElementById('mobile-nav-menu');
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', !expanded);
+    menu.hidden = expanded;
+    if (!expanded) menu.querySelector('a').focus();
+  });
+})();
+</script>

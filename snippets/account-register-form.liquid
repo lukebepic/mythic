@@ -1,0 +1,27 @@
+{%- comment -%}
+Customer Register Form – Accessible, extensible, styled for modern Shopify themes.
+{%- endcomment -%}
+<form method="post" action="/account/register" class="account-form account-register-form" autocomplete="on">
+  <h2>Create Account</h2>
+  {% if form.errors %}
+    <div class="form-errors" role="alert">
+      {% for field in form.errors %}
+        <div>{{ field | capitalize }}: {{ form.errors.messages[field] }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <label for="RegisterFirstName">First Name</label>
+  <input type="text" id="RegisterFirstName" name="customer[first_name]" autocomplete="given-name" required>
+  
+  <label for="RegisterLastName">Last Name</label>
+  <input type="text" id="RegisterLastName" name="customer[last_name]" autocomplete="family-name">
+  
+  <label for="RegisterEmail">Email</label>
+  <input type="email" id="RegisterEmail" name="customer[email]" autocomplete="email" required>
+  
+  <label for="RegisterPassword">Password</label>
+  <input type="password" id="RegisterPassword" name="customer[password]" autocomplete="new-password" required>
+  
+  <button type="submit">Create Account</button>
+  <a href="/account/login" class="account-link">Already have an account?</a>
+</form>

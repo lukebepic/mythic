@@ -1,0 +1,14 @@
+{%- comment -%}
+Accessibility UI: text resize, contrast toggle, skip to content.
+{%- endcomment -%}
+<nav aria-label="Accessibility controls" class="a11y-controls">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <button onclick="document.body.classList.toggle('high-contrast')">Toggle Contrast</button>
+  <button onclick="document.body.style.fontSize='larger'">A+</button>
+  <button onclick="document.body.style.fontSize='smaller'">A-</button>
+</nav>
+<style>
+  .skip-link { position: absolute; left: -9999px; }
+  .skip-link:focus { left: 10px; top: 10px; z-index: 9999; background: #000; color: #fff; }
+  .high-contrast { filter: invert(1) hue-rotate(180deg); }
+</style>

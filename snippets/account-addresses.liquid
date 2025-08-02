@@ -1,0 +1,32 @@
+{%- comment -%}
+Lists and manages customer addresses.
+{%- endcomment -%}
+<div class="account-addresses">
+  <h2>Addresses</h2>
+  <a href="/account/addresses#add" class="account-link">Add New Address</a>
+  {% paginate customer.addresses by 5 %}
+    {% for address in customer.addresses %}
+      <div class="address-block">
+        <p>
+          {{ address.first_name }} {{ address.last_name }}<br>
+          {{ address.company }}<br>
+          {{ address.address1 }}{% if address.address2 != blank %}, {{ address.address2 }}{% endif %}<br>
+          {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
+          {{ address.country }}
+        </p>
+        {% if address == customer.default_address %}
+          <span class="address-default">Default</span>
+        {% endif %}
+        <a href="/account/addresses/{{ address.id }}/edit" class="account-link">Edit</a>
+        <form method="post" action="/account/addresses/{{ address.id }}?delete=true" onsubmit="return confirm('Delete this address?');">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    {% endfor %}
+    {% if paginate.pages > 1 %}
+      <div class="pagination">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+</div>

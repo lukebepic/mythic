@@ -1,0 +1,12 @@
+<div class="cart-summary">
+  <div>Subtotal: <span>{{ cart.total_price | money }}</span></div>
+  {% if cart.cart_level_discount_applications.size > 0 %}
+    <div class="cart-discount">
+      {% for discount in cart.cart_level_discount_applications %}
+        <span>{{ discount.title }}: -{{ discount.total_allocated_amount | money }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div class="cart-shipping">Shipping calculated at checkout.</div>
+  <div class="cart-upsell"></div>
+</div>

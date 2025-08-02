@@ -1,0 +1,13 @@
+{%- comment -%}
+B2B/Wholesale pricing, min/max order, customer group logic.
+{%- endcomment -%}
+{% if customer and customer.tags contains 'wholesale' %}
+  <div class="b2b-price">
+    <span>Wholesale Price:</span>
+    <span>{{ product.metafields.b2b.price | default: product.price | times: 0.8 | money }}</span>
+    <span>Min order: 10 units</span>
+  </div>
+  <script>
+    document.querySelector('input[name="quantity"]').min = 10;
+  </script>
+{% endif %}

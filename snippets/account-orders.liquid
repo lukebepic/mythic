@@ -1,0 +1,32 @@
+{%- comment -%}
+Lists customer orders with status, date, and link to details.
+{%- endcomment -%}
+<div class="account-orders">
+  <h2>Order History</h2>
+  {% if customer.orders_count > 0 %}
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in customer.orders %}
+          <tr>
+            <td>#{{ order.name }}</td>
+            <td>{{ order.created_at | date: "%b %d, %Y" }}</td>
+            <td>{{ order.fulfillment_status_label }}</td>
+            <td>{{ order.total_price | money }}</td>
+            <td><a href="{{ order.customer_url }}" class="account-link">View</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You haven't placed any orders yet.</p>
+  {% endif %}
+</div>

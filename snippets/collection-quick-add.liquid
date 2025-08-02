@@ -1,0 +1,5 @@
+{% comment %} Quick add to cart button for collection grid {% endcomment %}
+<form method="post" action="/cart/add" class="quick-add-form">
+  <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+  <button class="btn quick-add-btn" type="submit">Quick Add</button>
+</form>

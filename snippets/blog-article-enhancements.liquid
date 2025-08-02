@@ -1,0 +1,15 @@
+{%- comment -%}
+Enhancements: reading time, share buttons, author info.
+{%- endcomment -%}
+<div class="blog-article-meta">
+  <span class="reading-time">
+    {% assign words = article.content | strip_html | split: " " | size %}
+    {% assign minutes = words | divided_by: 200 | plus: 1 %}
+    {{ minutes }} min read
+  </span>
+  <span class="author-info">By {{ article.author }}</span>
+</div>
+<div class="share-buttons">
+  <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ article.url }}" target="_blank" rel="noopener">Share on X</a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ article.url }}" target="_blank" rel="noopener">Facebook</a>
+</div>

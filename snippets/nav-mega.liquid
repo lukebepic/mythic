@@ -1,0 +1,22 @@
+{% comment %} Mega menu example (optional, extend as needed) {% endcomment %}
+{% for link in linklists.main-menu.links %}
+  {% if link.links.size > 0 %}
+    <div class="mega-menu">
+      <h3>{{ link.title }}</h3>
+      <div class="mega-menu-columns">
+        {% for child in link.links %}
+          <div class="mega-menu-col">
+            <a href="{{ child.url }}">{{ child.title }}</a>
+            {% if child.links.size > 0 %}
+              <ul>
+                {% for grandchild in child.links %}
+                  <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

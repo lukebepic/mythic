@@ -1,0 +1,36 @@
+{%- comment -%}
+Loyalty gamification: badges, achievements, progress bars, on-site notifications.
+{%- endcomment -%}
+{% if customer %}
+  <div class="loyalty-gamification" style="margin:1em 0;">
+    <h4>Loyalty Progress</h4>
+    <div>
+      <span>Orders: {{ customer.orders_count }}</span>
+      <progress value="{{ customer.orders_count }}" max="10"></progress>
+      {% if customer.orders_count >= 10 %}
+        <span class="badge" style="background:#ffd700;padding:3px 7px;border-radius:5px;margin-left:5px;">🥇 Gold Member</span>
+      {% elsif customer.orders_count >= 5 %}
+        <span class="badge" style="background:#bbb;padding:3px 7px;border-radius:5px;margin-left:5px;">🥈 Silver</span>
+      {% elsif customer.orders_count >= 1 %}
+        <span class="badge" style="background:#cd7f32;padding:3px 7px;border-radius:5px;margin-left:5px;">🥉 Bronze</span>
+      {% endif %}
+    </div>
+    <div>
+      <span>Referrals: {{ customer.metafields.loyalty.referrals | default: 0 }}</span>
+      <progress value="{{ customer.metafields.loyalty.referrals | default: 0 }}" max="5"></progress>
+      {% if customer.metafields.loyalty.referrals and customer.metafields.loyalty.referrals > 0 %}
+        <span class="badge" style="background:#4caf50;padding:3px 7px;border-radius:5px;margin-left:5px;">🎉 Referral Pro</span>
+      {% endif %}
+    </div>
+    <div>
+      <span>Reviews: {{ customer.metafields.loyalty.reviews | default: 0 }}</span>
+      <progress value="{{ customer.metafields.loyalty.reviews | default: 0 }}" max="5"></progress>
+      {% if customer.metafields.loyalty.reviews and customer.metafields.loyalty.reviews > 0 %}
+        <span class="badge" style="background:#2196f3;padding:3px 7px;border-radius:5px;margin-left:5px;">📝 Top Reviewer</span>
+      {% endif %}
+    </div>
+    <div>
+      <small>Unlock more rewards as you shop, refer, and review!</small>
+    </div>
+  </div>
+{% endif %}

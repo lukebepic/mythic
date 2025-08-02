@@ -1,0 +1,13 @@
+{%- comment -%}
+Language selector (dropdown, header/footer/modal ready). Integrates with Shopify Markets.
+{%- endcomment -%}
+<form id="LanguageSelector" class="localization-language-selector" action="{{ localization.language.root_url }}" method="get">
+  <label for="lang-switch">Language</label>
+  <select name="language_code" id="lang-switch" onchange="this.form.submit()">
+    {% for language in localization.available_languages %}
+      <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+        {{ language.endonym_name | capitalize }}
+      </option>
+    {% endfor %}
+  </select>
+</form>

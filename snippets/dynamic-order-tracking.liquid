@@ -1,0 +1,32 @@
+{%- comment -%}
+Order tracking widget: customer enters order number and email, fetches status.
+{%- endcomment -%}
+<form id="order-tracking-form" class="order-tracking-form">
+  <label for="order-id">Order Number</label>
+  <input type="text" id="order-id" name="order_id" required>
+  <label for="order-email">Email</label>
+  <input type="email" id="order-email" name="email" required>
+  <button type="submit">Track Order</button>
+</form>
+<div id="order-tracking-result"></div>
+<script>
+document.getElementById('order-tracking-form').onsubmit = function(e) {
+  e.preventDefault();
+  var order = document.getElementById('order-id').value;
+  var email = document.getElementById('order-email').value;
+  var result = document.getElementById('order-tracking-result');
+  result.innerHTML = 'Checking...';
+  // Replace the fetch below with a real endpoint or app as needed
+  fetch('/apps/order-tracking?order_id=' + encodeURIComponent(order) + '&email=' + encodeURIComponent(email))
+    .then(r=>r.json())
+    .then(data=>{
+      if (data.status) {
+        result.innerHTML = 'Order status: ' + data.status;
+      } else {
+        result.innerHTML = 'Order not found or email does not match.';
+      }
+    }).catch(function() {
+      result.innerHTML = 'Unable to check order status at this time.';
+    });
+};
+</script>

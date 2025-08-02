@@ -1,0 +1,21 @@
+{%- comment -%}
+AJAX-powered modal cart popup, can trigger after add-to-cart.
+{%- endcomment -%}
+<div id="CartModal" class="cart-modal" aria-modal="true" role="dialog" tabindex="-1" style="display:none;">
+  <button id="CartModalClose" class="modal-close" aria-label="Close">&times;</button>
+  <h2>Cart Updated</h2>
+  <div id="CartModalContents">
+    {% render 'cart-main', context: 'modal' %}
+  </div>
+  <a href="/cart" class="cart-link">Go to Cart</a>
+</div>
+<script>
+  document.querySelectorAll('.cart-modal-trigger').forEach(btn => btn.addEventListener('click', () => {
+    document.getElementById('CartModal').style.display='block';
+    document.body.classList.add('modal-open');
+  }));
+  document.getElementById('CartModalClose')?.addEventListener('click', () => {
+    document.getElementById('CartModal').style.display='none';
+    document.body.classList.remove('modal-open');
+  });
+</script>

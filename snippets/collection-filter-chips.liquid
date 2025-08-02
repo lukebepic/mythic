@@ -1,0 +1,32 @@
+{%- comment -%}
+Displays active filters as removable "chips". Clicking a chip removes the filter and reloads collection.
+{%- endcomment -%}
+<div class="collection-filter-chips">
+  {% assign params = request.params %}
+  {% if current_tags %}
+    {% for tag in current_tags %}
+      <a class="chip" href="{{ collection.url }}?{{ params | remove: 'filter.v.tag=' | append: 'filter.v.tag=' | append: tag | url_encode }}">
+        {{ tag }} &times;
+      </a>
+    {% endfor %}
+  {% endif %}
+  {% if params.filter.v.vendor %}
+    <a class="chip" href="{{ collection.url }}?{{ params | remove: 'filter.v.vendor=' }}">
+      {{ params.filter.v.vendor }} &times;
+    </a>
+  {% endif %}
+  {% if params.filter.v.price_min or params.filter.v.price_max %}
+    <a class="chip" href="{{ collection.url }}?{{ params | remove: 'filter.v.price_min=' | remove: 'filter.v.price_max=' }}">
+      Price: 
+      {% if params.filter.v.price_min %}{{ params.filter.v.price_min }}{% endif %}
+      -
+      {% if params.filter.v.price_max %}{{ params.filter.v.price_max }}{% endif %}
+      &times;
+    </a>
+  {% endif %}
+  {% if params.filter.v.material %}
+    <a class="chip" href="{{ collection.url }}?{{ params | remove: 'filter.v.material=' }}">
+      {{ params.filter.v.material }} &times;
+    </a>
+  {% endif %}
+</div>

@@ -1,0 +1,9 @@
+{%- comment -%}
+Loyalty widget: displays points, can link to account or rewards page.
+{%- endcomment -%}
+{% if customer %}
+  <div class="loyalty-widget">
+    <span>You have <strong>{{ customer.tags | where: "points:" | first | remove: "points:" | default: "0" }}</strong> loyalty points</span>
+    <a href="/account/rewards" class="btn btn--small">View Rewards</a>
+  </div>
+{% endif %}

@@ -1,0 +1,28 @@
+{%- comment -%}
+Order tracking widget, integrates with AfterShip, Route, or native status.
+{%- endcomment -%}
+{% if customer %}
+  <div class="order-tracking">
+    <h3>Track Your Order</h3>
+    <form id="order-tracking-form" onsubmit="event.preventDefault();trackOrder();">
+      <input type="text" id="order-num" placeholder="Order #" required>
+      <input type="email" id="order-email" placeholder="Email" required>
+      <button type="submit">Track</button>
+    </form>
+    <div id="order-tracking-result"></div>
+  </div>
+  <script>
+    function trackOrder() {
+      const num = document.getElementById('order-num').value;
+      const email = document.getElementById('order-email').value;
+      // Example: Integrate with AfterShip or custom API
+      fetch('https://api.aftership.com/v4/trackings/get?tracking_number='+encodeURIComponent(num)+'&email='+encodeURIComponent(email), {
+        headers: { 'aftership-api-key': 'YOUR_API_KEY' }
+      })
+      .then(r=>r.json()).then(d=>{
+        document.getElementById('order-tracking-result').innerHTML =
+          d && d.data ? JSON.stringify(d.data) : 'No tracking info found.';
+      });
+    }
+  </script>
+{% endif %}

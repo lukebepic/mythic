@@ -1,0 +1,23 @@
+<table class="cart-items">
+  <thead>
+    <tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for item in cart.items %}
+      <tr>
+        <td>
+          <a href="{{ item.url }}"><img src="{{ item.image | img_url: '120x' }}" alt="{{ item.title }}"></a>
+          <span>{{ item.product.title }}</span>
+        </td>
+        <td>{{ item.price | money }}</td>
+        <td>
+          <input type="number" name="updates[]" value="{{ item.quantity }}" min="1">
+        </td>
+        <td>{{ item.line_price | money }}</td>
+        <td>
+          <button name="remove" value="{{ item.key }}" class="btn-remove">Remove</button>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

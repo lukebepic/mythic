@@ -1,0 +1,16 @@
+{%- comment -%}
+Multi-language locale switcher, works with Shopify Markets or translation apps.
+{%- endcomment -%}
+{% if localization.available_languages.size > 1 %}
+  <form class="locale-switcher" action="{{ localization.language_switch_url }}" method="post">
+    <label for="lang-switch">Language</label>
+    <select id="lang-switch" name="language_code" onchange="this.form.submit()">
+      {% for language in localization.available_languages %}
+        <option value="{{ language.iso_code }}" {% if localization.language.iso_code == language.iso_code %}selected{% endif %}>
+          {{ language.endonym_name }}
+        </option>
+      {% endfor %}
+    </select>
+    <noscript><button type="submit">Change</button></noscript>
+  </form>
+{% endif %}

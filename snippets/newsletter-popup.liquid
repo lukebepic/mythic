@@ -1,0 +1,22 @@
+{%- comment -%}
+Newsletter/offer popup: Timed or exit-intent.
+{%- endcomment -%}
+<div id="NewsletterPopup" class="newsletter-popup" style="display:none;">
+  <form action="/contact#newsletter" method="post">
+    <label for="newsletter-email">Sign up for news & offers</label>
+    <input type="email" name="contact[email]" id="newsletter-email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+  <button class="close" onclick="document.getElementById('NewsletterPopup').style.display='none'">&times;</button>
+</div>
+<script>
+  setTimeout(() => {
+    if(!localStorage.getItem('newsletterPopup')) {
+      document.getElementById('NewsletterPopup').style.display = 'block';
+    }
+  }, 7000);
+  document.querySelector('#NewsletterPopup .close').onclick = () => {
+    localStorage.setItem('newsletterPopup', '1');
+    document.getElementById('NewsletterPopup').style.display = 'none';
+  };
+</script>

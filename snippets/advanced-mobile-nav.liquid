@@ -1,0 +1,47 @@
+{%- comment -%}
+Advanced mobile navigation drawer with submenus and focus trap.
+{%- endcomment -%}
+<nav class="mobile-drawer" aria-label="Mobile navigation" id="mobile-drawer" tabindex="-1" hidden>
+  <button class="mobile-drawer__close" aria-label="Close menu">&times;</button>
+  <ul>
+    {% for link in linklists.main-menu.links %}
+      <li>
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        {% if link.links.size > 0 %}
+          <button class="submenu-toggle" aria-expanded="false" aria-controls="submenu-{{ forloop.index }}">+</button>
+          <ul id="submenu-{{ forloop.index }}" hidden>
+            {% for sublink in link.links %}
+              <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+<button class="mobile-menu-open" aria-controls="mobile-drawer" aria-expanded="false">Menu</button>
+<script>
+(function() {
+  var drawer = document.getElementById('mobile-drawer');
+  var openBtn = document.querySelector('.mobile-menu-open');
+  openBtn.addEventListener('click', function() {
+    drawer.hidden = false;
+    drawer.focus();
+    openBtn.setAttribute('aria-expanded', 'true');
+  });
+  drawer.querySelector('.mobile-drawer__close').onclick = function() {
+    drawer.hidden = true;
+    openBtn.setAttribute('aria-expanded', 'false');
+  };
+  drawer.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') drawer.hidden = true;
+  });
+  drawer.querySelectorAll('.submenu-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      document.getElementById(btn.getAttribute('aria-controls')).hidden = expanded;
+    });
+  });
+})();
+</script>

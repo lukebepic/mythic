@@ -1,0 +1,24 @@
+{%- comment -%}
+Back-in-stock notification: collects email, submits to app or endpoint.
+{%- endcomment -%}
+{% unless product.available %}
+<form id="back-in-stock-form" class="back-in-stock-form">
+  <label for="back-in-stock-email">Notify me when available</label>
+  <input type="email" id="back-in-stock-email" name="email" required placeholder="Your email">
+  <button type="submit">Notify Me</button>
+  <div class="back-in-stock-status" aria-live="polite"></div>
+</form>
+<script>
+document.getElementById('back-in-stock-form').onsubmit = function(e) {
+  e.preventDefault();
+  var email = document.getElementById('back-in-stock-email').value;
+  var status = this.querySelector('.back-in-stock-status');
+  // Replace this URL with your notification backend/app
+  fetch('/apps/back-in-stock', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product: '{{ product.id }}', email })
+  }).then(r => r.ok ? status.textContent = 'You’ll be notified!' : status.textContent = 'Error, try again.');
+};
+</script>
+{% endunless %}

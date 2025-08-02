@@ -1,0 +1,18 @@
+{%- comment -%}
+Multi-vendor/marketplace foundation: vendor shop blocks, commission logic
+{%- endcomment -%}
+{% if product.vendor %}
+  <div class="vendor-shop">
+    <span>Sold by: <a href="/collections/vendors?q={{ product.vendor | url_encode }}">{{ product.vendor }}</a></span>
+    {% if shop.metafields.marketplace.commission %}
+      <span>(Marketplace commission: {{ shop.metafields.marketplace.commission }}%)</span>
+    {% endif %}
+    <!-- Vendor info block -->
+    {% assign vendor_info = shop.metafields.marketplace[product.vendor | handleize] %}
+    {% if vendor_info %}
+      <div>
+        {{ vendor_info }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

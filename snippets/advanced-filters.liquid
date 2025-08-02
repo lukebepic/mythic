@@ -1,0 +1,54 @@
+{%- comment -%}
+AJAX Faceted Filtering: tags, price, size, color, vendor, metafields, ratings.
+{%- endcomment -%}
+<form id="CollectionFilters" class="filters-form" data-collection="{{ collection.handle }}">
+  <div class="filter-group">
+    <label>Price</label>
+    <input type="range" name="price_min" min="0" max="1000" step="10" value="{{ params.price_min | default: 0 }}">
+    <input type="range" name="price_max" min="0" max="1000" step="10" value="{{ params.price_max | default: 1000 }}">
+  </div>
+  <div class="filter-group">
+    <label>Color</label>
+    {% assign colors = collection.all_products | map: 'options_by_name.Color' | uniq %}
+    {% for color in colors %}
+      <label><input type="checkbox" name="color" value="{{ color }}" {% if params.color contains color %}checked{% endif %}>{{ color }}</label>
+    {% endfor %}
+  </div>
+  <div class="filter-group">
+    <label>Vendor</label>
+    {% assign vendors = collection.all_products | map: 'vendor' | uniq %}
+    {% for vendor in vendors %}
+      <label><input type="checkbox" name="vendor" value="{{ vendor }}" {% if params.vendor contains vendor %}checked{% endif %}>{{ vendor }}</label>
+    {% endfor %}
+  </div>
+  <div class="filter-group">
+    <label>In Stock</label>
+    <input type="checkbox" name="in_stock" {% if params.in_stock %}checked{% endif %}>
+  </div>
+  <div class="filter-group">
+    <label>Sort by</label>
+    <select name="sort_by">
+      <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+      <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+      <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+      <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+    </select>
+  </div>
+  <button type="submit">Apply Filters</button>
+</form>
+<script>
+  // AJAX filter reload
+  document.getElementById('CollectionFilters')?.addEventListener('submit', function(e){
+    e.preventDefault();
+    const form = e.target;
+    const params = new URLSearchParams(new FormData(form));
+    fetch(window.location.pathname + '?' + params.toString(), {headers: {'X-Requested-With': 'XMLHttpRequest'}})
+      .then(r=>r.text())
+      .then(html=>{
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        document.querySelector('.collection-products').innerHTML =
+          doc.querySelector('.collection-products').innerHTML;
+      });
+  });
+</script>

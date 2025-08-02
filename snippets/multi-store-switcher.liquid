@@ -1,0 +1,12 @@
+{%- comment -%}
+Multi-store switcher: lets users switch between different region stores.
+{%- endcomment -%}
+<form id="MultiStoreSwitcher" class="multi-store-switcher">
+  <label for="store-switch">Shop your region:</label>
+  <select id="store-switch" onchange="window.location.href=this.value;">
+    <option value="https://us.yourstore.com" {% if shop.domain contains 'us.' %}selected{% endif %}>United States</option>
+    <option value="https://uk.yourstore.com" {% if shop.domain contains 'uk.' %}selected{% endif %}>United Kingdom</option>
+    <option value="https://eu.yourstore.com" {% if shop.domain contains 'eu.' %}selected{% endif %}>Europe</option>
+    <!-- Add more regions as needed -->
+  </select>
+</form>

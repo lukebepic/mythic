@@ -1,0 +1,30 @@
+{%- comment -%}
+Integrated Email/SMS Marketing Snippets: Prebuilt popups, flows, and subscribe forms styled for the theme.
+{%- endcomment -%}
+<div id="email-sms-signup" style="background:#f0f7ff;padding:1em;margin:1em 0;border-radius:7px;max-width:400px;">
+  <h4>Get 10% Off Your First Order</h4>
+  <form onsubmit="signupMarketing(event)" style="display:flex;gap:7px;">
+    <input type="email" name="email" placeholder="Email address" required style="flex:2;">
+    <input type="tel" name="phone" placeholder="SMS (optional)" style="flex:1;">
+    <button type="submit" style="background:#0057ff;color:#fff;padding:7px 12px;border:none;border-radius:4px;">Subscribe</button>
+  </form>
+  <div id="marketing-response"></div>
+</div>
+<script>
+function signupMarketing(e){
+  e.preventDefault();
+  var f = e.target, data = {
+    email: f.email.value,
+    phone: f.phone.value
+  };
+  fetch('https://YOUR_MARKETING_API/signup', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  })
+  .then(r=>r.json())
+  .then(resp=>{
+    document.getElementById('marketing-response').textContent = resp.success ? "Thank you for joining!" : "Signup failed.";
+  });
+}
+</script>

@@ -1,0 +1,14 @@
+{%- comment -%}
+Sort dropdown for collection: price, best selling, etc.
+{%- endcomment -%}
+<form class="collection-sorting" method="get" action="{{ collection.url }}">
+  <label for="SortBy">Sort by:</label>
+  <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+    <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+    <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+    <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+    <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+    <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A–Z</option>
+    <option value="title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Z–A</option>
+  </select>
+</form>

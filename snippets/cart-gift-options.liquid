@@ -1,0 +1,20 @@
+{%- comment -%}
+Gift note, wrapping, and promo code field for the cart.
+{%- endcomment -%}
+<div class="cart-gift-options">
+  <label>
+    <input type="checkbox" name="attributes[gift]" {% if cart.attributes.gift %}checked{% endif %}>
+    This order is a gift
+  </label>
+  <div class="gift-note-field" {% unless cart.attributes.gift %}style="display:none;"{% endunless %}>
+    <label for="CartGiftNote">Gift note</label>
+    <textarea id="CartGiftNote" name="attributes[gift_note]">{{ cart.attributes.gift_note }}</textarea>
+  </div>
+  <label for="CartPromoCode">Promo code</label>
+  <input type="text" id="CartPromoCode" name="discount" value="">
+</div>
+<script>
+  document.querySelector('input[name="attributes[gift]"]')?.addEventListener('change', function(){
+    document.querySelector('.gift-note-field').style.display = this.checked ? '' : 'none';
+  });
+</script>

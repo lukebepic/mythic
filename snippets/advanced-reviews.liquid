@@ -1,0 +1,32 @@
+{%- comment -%}
+Advanced reviews: list with average, stars, and review submission form.
+{%- endcomment -%}
+<div class="reviews-widget">
+  <div class="reviews-summary">
+    <span class="stars">{% for i in (1..5) %}{% if product.metafields.reviews.average >= i %}★{% else %}☆{% endif %}{% endfor %}</span>
+    <span>{{ product.metafields.reviews.average | default: 0 }}/5</span>
+    <span>({{ product.metafields.reviews.count | default: 0 }} reviews)</span>
+  </div>
+  <div class="reviews-list">
+    {% for review in product.metafields.reviews.list | default: blank %}
+      <div class="review">
+        <strong>{{ review.author }}</strong>
+        <span>
+          {% for i in (1..review.rating) %}★{% endfor %}
+          {% for i in (review.rating+1)..5 %}☆{% endfor %}
+        </span>
+        <p>{{ review.body }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <form class="review-form">
+    <h4>Leave a review</h4>
+    <input type="text" name="author" required placeholder="Your name">
+    <select name="rating" required>
+      <option value="">Rating</option>
+      {% for i in (1..5) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
+    </select>
+    <textarea name="body" required placeholder="Your review"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>

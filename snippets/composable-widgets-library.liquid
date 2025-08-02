@@ -1,0 +1,38 @@
+{%- comment -%}
+Composable Widgets/No-Code Section Library: Widget marketplace for drag-and-drop/no-code section creation.
+{%- endcomment -%}
+{% if customer and customer.tags contains 'admin' %}
+  <div id="widgets-library" style="margin:2em 0;">
+    <h2>Widgets Library</h2>
+    <div id="widget-list"></div>
+    <button onclick="addWidget()">Add Widget</button>
+  </div>
+  <script>
+    // Example: You can replace this with an API call to fetch widget modules
+    const widgets = [
+      {name:"Announcement Bar", snippet:"announcement-bar.liquid"},
+      {name:"Countdown Timer", snippet:"flash-sale-countdown.liquid"},
+      {name:"Instagram Feed", snippet:"ugc-instagram-feed.liquid"},
+      {name:"Product Reviews", snippet:"widget-reviews.liquid"},
+      {name:"Popup Banner", snippet:"widget-popup.liquid"}
+    ];
+    function renderWidgets() {
+      let html = widgets.map(w =>
+        `<div style="display:flex;align-items:center;margin:10px 0;">
+          <span style="flex:1;">${w.name}</span>
+          <button onclick="insertWidget('${w.snippet}')">➕ Add</button>
+        </div>`
+      ).join('');
+      document.getElementById('widget-list').innerHTML = html;
+    }
+    function addWidget() {
+      alert("Drag a widget to your page or click ➕ to insert!");
+    }
+    function insertWidget(snippet) {
+      // This would use Shopify's Section Rendering API or metafields to insert the snippet
+      fetch('/widgets/add', {method:'POST',body:JSON.stringify({snippet})});
+      alert('Widget added: ' + snippet);
+    }
+    renderWidgets();
+  </script>
+{% endif %}

@@ -1,0 +1,25 @@
+{%- comment -%}
+Accessible FAQ accordion, can be used as a section or in templates.
+{%- endcomment -%}
+<div class="faq-accordion" id="faq-accordion">
+  {% for block in section.blocks %}
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" aria-controls="faq-{{ block.id }}" id="faq-q-{{ block.id }}">
+        {{ block.settings.question }}
+      </button>
+      <div class="faq-answer" id="faq-{{ block.id }}" role="region" aria-labelledby="faq-q-{{ block.id }}" hidden>
+        {{ block.settings.answer }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<script>
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    var ans = document.getElementById(btn.getAttribute('aria-controls'));
+    ans.hidden = expanded;
+  });
+});
+</script>

@@ -1,0 +1,11 @@
+{%- comment -%}
+Lighthouse/performance best practices: lazy loading images, preconnects, async scripts.
+{%- endcomment -%}
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+document.querySelectorAll('img').forEach(function(img) {
+  img.loading = 'lazy';
+});
+</script>

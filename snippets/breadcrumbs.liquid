@@ -1,1 +1,15 @@
-<contents omitted for brevity>
+{% comment %} Breadcrumb navigation {% endcomment %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  {% if collection %}
+    &raquo; <a href="/collections">Collections</a> &raquo; <span>{{ collection.title }}</span>
+  {% elsif product %}
+    &raquo; <a href="/collections">Collections</a> &raquo; <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a> &raquo; <span>{{ product.title }}</span>
+  {% elsif article %}
+    &raquo; <a href="/blogs">Blog</a> &raquo; <span>{{ article.title }}</span>
+  {% elsif search %}
+    &raquo; <span>Search</span>
+  {% elsif page %}
+    &raquo; <span>{{ page.title }}</span>
+  {% endif %}
+</nav>

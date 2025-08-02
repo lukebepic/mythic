@@ -1,0 +1,11 @@
+{%- comment -%}
+AI-powered checkout nudges (upsell, free shipping, etc).
+{%- endcomment -%}
+<div class="ai-cart-nudge" id="ai-cart-nudge"></div>
+<script>
+  // Example: Replace with your own AI endpoint/logic as needed
+  fetch('https://api.your-ai-service.com/cart-nudge?cart={{ cart.token }}')
+    .then(r=>r.json()).then(d=>{
+      if(d && d.nudge) document.getElementById('ai-cart-nudge').innerHTML = d.nudge;
+    });
+</script>

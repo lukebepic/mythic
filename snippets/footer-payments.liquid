@@ -1,0 +1,11 @@
+{% comment %} Payment method icons (auto, or override in settings) {% endcomment %}
+<div class="footer-payments">
+  {% if settings.footer_payment_images != blank %}
+    <img src="{{ settings.footer_payment_images | img_url: '300x' }}" alt="Payment Methods">
+  {% else %}
+    {% render 'icon', name: 'visa' %}
+    {% render 'icon', name: 'mastercard' %}
+    {% render 'icon', name: 'amex' %}
+    {% render 'icon', name: 'paypal' %}
+  {% endif %}
+</div>

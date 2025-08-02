@@ -1,0 +1,15 @@
+{% comment %} Main navigation (desktop) {% endcomment %}
+<ul class="nav-list">
+  {% for link in linklists.main-menu.links %}
+    <li class="nav-item{% if link.links.size > 0 %} has-dropdown{% endif %}">
+      <a href="{{ link.url }}">{{ link.title }}</a>
+      {% if link.links.size > 0 %}
+        <ul class="nav-dropdown">
+          {% for child in link.links %}
+            <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

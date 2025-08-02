@@ -1,0 +1,20 @@
+{%- comment -%}
+Geo-targeted offers and banners (country-based).
+{%- endcomment -%}
+<div id="geo-offer-banner" style="display:none;"></div>
+<script>
+  fetch('https://ipapi.co/json/')
+    .then(r=>r.json()).then(d=>{
+      let banner = '';
+      if (d && d.country) {
+        if (d.country === 'US') banner = '🇺🇸 Free shipping on US orders!';
+        if (d.country === 'GB') banner = '🇬🇧 10% off for UK customers!';
+        // Add more regions and offers as needed
+        if (banner) {
+          const el = document.getElementById('geo-offer-banner');
+          el.textContent = banner;
+          el.style.display = '';
+        }
+      }
+    });
+</script>

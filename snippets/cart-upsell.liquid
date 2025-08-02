@@ -1,0 +1,20 @@
+{%- comment -%}
+Inline or modal cart upsell/cross-sell suggestions.
+{%- endcomment -%}
+{% assign upsell_product = all_products[settings.cart_upsell_product_handle] %}
+{% if upsell_product.available %}
+  <div class="cart-upsell">
+    <h3>Don't miss this!</h3>
+    <div class="upsell-product-info">
+      <img src="{{ upsell_product.featured_image | img_url: '120x' }}" alt="{{ upsell_product.title }}">
+      <div>
+        <strong>{{ upsell_product.title }}</strong>
+        <span class="price">{{ upsell_product.price | money }}</span>
+        <form method="post" action="/cart/add" class="upsell-add-form">
+          <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+          <button type="submit">Add to Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endif %}

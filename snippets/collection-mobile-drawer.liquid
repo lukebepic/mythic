@@ -1,0 +1,18 @@
+{%- comment -%}
+Mobile filter drawer for collections. Toggles the advanced filters in a slide-out panel.
+{%- endcomment -%}
+<button id="OpenFiltersDrawer" class="mobile-filters-toggle">Filters</button>
+<div id="MobileFiltersDrawer" class="mobile-filters-drawer" style="display:none;">
+  <button id="CloseFiltersDrawer" class="drawer-close" aria-label="Close">&times;</button>
+  {% render 'collection-filters-advanced' %}
+</div>
+<script>
+  document.getElementById('OpenFiltersDrawer')?.addEventListener('click',()=> {
+    document.getElementById('MobileFiltersDrawer').style.display='block';
+    document.body.classList.add('filters-open');
+  });
+  document.getElementById('CloseFiltersDrawer')?.addEventListener('click',()=> {
+    document.getElementById('MobileFiltersDrawer').style.display='none';
+    document.body.classList.remove('filters-open');
+  });
+</script>

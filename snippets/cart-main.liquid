@@ -1,0 +1,53 @@
+{%- comment -%}
+Reusable cart content block for drawer, modal, or full cart page.
+{%- endcomment -%}
+<form action="/cart" method="post" id="CartForm" class="cart-main">
+  <table class="cart-table" role="table">
+    <thead>
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Price</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart.items %}
+        <tr>
+          <td>
+            <a href="{{ item.url }}">
+              <img src="{{ item.image | img_url: '100x' }}" alt="{{ item.title }}">
+              <span>{{ item.product.title }}</span>
+              {% if item.variant.title != 'Default Title' %}<br><small>{{ item.variant.title }}</small>{% endif %}
+              {% if item.properties %}
+                <ul class="line-properties">
+                  {% for p in item.properties %}
+                    <li><strong>{{ p.first }}:</strong> {{ p.last }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </a>
+          </td>
+          <td>
+            <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-id="{{ item.key }}">
+          </td>
+          <td>{{ item.line_price | money }}</td>
+          <td>
+            <button type="submit" name="updates[]" value="0" class="cart-remove" aria-label="Remove">&times;</button>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% render 'cart-gift-options' %}
+  <div class="cart-actions">
+    <div class="cart-total"><strong>Total:</strong> {{ cart.total_price | money }}</div>
+    {% if context != 'drawer' and context != 'modal' %}
+      <button type="submit" class="update-cart">Update Cart</button>
+    {% endif %}
+    <a href="/checkout" class="checkout-btn">Checkout</a>
+  </div>
+  {% render 'cart-progress-bar' %}
+  {% render 'cart-upsell' %}
+  {% render 'cart-suggestions' %}
+</form>

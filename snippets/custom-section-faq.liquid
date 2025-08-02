@@ -1,0 +1,20 @@
+{%- comment -%}
+Section: Easily add FAQ accordion with blocks.
+{%- endcomment -%}
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "textarea", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ Accordion" }]
+}
+{% endschema %}
+{% render 'faq-accordion' %}

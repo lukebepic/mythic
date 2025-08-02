@@ -1,0 +1,48 @@
+{%- comment -%}
+Bundles, Subscriptions, GWP (Gift With Purchase) logic.
+{%- endcomment -%}
+<div class="bundles-section">
+  <h3>Bundle & Save</h3>
+  <div class="bundle-products">
+    {% assign bundle_products = product.metafields.bundle.products | split: ',' %}
+    {% for handle in bundle_products %}
+      {% assign b_product = all_products[handle] %}
+      <div class="bundle-item">
+        <a href="{{ b_product.url }}">
+          <img src="{{ b_product.featured_image | img_url: '180x' }}" alt="{{ b_product.title }}">
+          <span>{{ b_product.title }}</span>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+  <form method="post" action="/cart/add">
+    {% for handle in bundle_products %}
+      {% assign b_product = all_products[handle] %}
+      <input type="hidden" name="items[][id]" value="{{ b_product.selected_or_first_available_variant.id }}">
+      <input type="hidden" name="items[][quantity]" value="1">
+    {% endfor %}
+    <button type="submit">Add Bundle to Cart</button>
+  </form>
+</div>
+{% if product.selling_plan_groups.size > 0 %}
+  <div class="subscriptions-section">
+    <label>
+      <input type="checkbox" name="subscribe" id="subscribe-checkbox">
+      Subscribe & Save ({{ product.selling_plan_groups[0].selling_plans[0].price_adjustments[0].value }}% off)
+    </label>
+    <select name="selling_plan">
+      {% for spg in product.selling_plan_groups %}
+        {% for plan in spg.selling_plans %}
+          <option value="{{ plan.id }}">{{ plan.name }}</option>
+        {% endfor %}
+      {% endfor %}
+    </select>
+  </div>
+{% endif %}
+{% if product.metafields.gwp.enabled == 'true' %}
+  <div class="gwp-section">
+    <strong>Gift with Purchase:</strong>
+    <span>{{ product.metafields.gwp.gift_title }}</span>
+    <img src="{{ product.metafields.gwp.gift_image | img_url: '120x' }}" alt="Gift">
+  </div>
+{% endif %}

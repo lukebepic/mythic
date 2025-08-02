@@ -1,0 +1,6 @@
+{% comment %} Promotional banners or callouts for collection pages {% endcomment %}
+{% if collection.metafields.custom.promo != blank %}
+  <div class="collection-promo-banner">
+    {{ collection.metafields.custom.promo }}
+  </div>
+{% endif %}

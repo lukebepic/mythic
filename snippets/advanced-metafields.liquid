@@ -1,0 +1,20 @@
+{%- comment -%}
+Example: Render product highlights, specifications, or icons using advanced metafields.
+{%- endcomment -%}
+{% if product.metafields.custom.highlights %}
+  <ul class="product-highlights">
+    {% for highlight in product.metafields.custom.highlights.value %}
+      <li>{{ highlight }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% if product.metafields.custom.specs %}
+  <table class="product-specs">
+    {% for spec in product.metafields.custom.specs.value %}
+      <tr>
+        <th>{{ spec.key }}</th>
+        <td>{{ spec.value }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endif %}

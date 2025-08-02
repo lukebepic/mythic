@@ -1,0 +1,18 @@
+{%- comment -%}
+Shows progress toward free shipping or milestone rewards.
+{%- endcomment -%}
+{% assign free_shipping_threshold = settings.cart_free_shipping_amount | default: 10000 %}
+{% assign cart_total = cart.total_price %}
+{% assign progress = cart_total | times: 100 | divided_by: free_shipping_threshold %}
+<div class="cart-progress-bar">
+  <div class="progress-label">
+    {% if cart_total >= free_shipping_threshold %}
+      🎉 You have free shipping!
+    {% else %}
+      Add {{ free_shipping_threshold | minus: cart_total | money }} for free shipping
+    {% endif %}
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width:{{ progress }}%"></div>
+  </div>
+</div>

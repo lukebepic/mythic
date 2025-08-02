@@ -1,0 +1,21 @@
+{%- comment -%}
+Pushes events to dataLayer for GA4/GTM/Ecommerce tracking.
+{%- endcomment -%}
+<script>
+window.dataLayer = window.dataLayer || [];
+function pushEvent(event, details) {
+  window.dataLayer.push(Object.assign({ event: event }, details));
+}
+// Example: product view
+if (window.meta && window.meta.product) {
+  pushEvent('view_item', {
+    ecommerce: {
+      items: [{
+        item_id: window.meta.product.id,
+        item_name: window.meta.product.title,
+        price: window.meta.product.price
+      }]
+    }
+  });
+}
+</script>

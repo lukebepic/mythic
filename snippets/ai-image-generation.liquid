@@ -1,0 +1,26 @@
+{%- comment -%}
+AI Image Generation: On-demand AI product images or banners using an external API (e.g., DALL·E, Stability).
+{%- endcomment -%}
+{% if customer and customer.tags contains 'admin' %}
+  <div id="ai-image-gen" style="margin:2em 0;">
+    <h4>Generate AI Image</h4>
+    <form onsubmit="genAIImage(event)">
+      <input type="text" id="ai-prompt" placeholder="Describe your product/banner" style="width:60%;">
+      <button type="submit">Generate</button>
+    </form>
+    <div id="ai-image-result" style="margin-top:1em;"></div>
+  </div>
+  <script>
+    function genAIImage(e){
+      e.preventDefault();
+      const prompt = document.getElementById('ai-prompt').value;
+      document.getElementById('ai-image-result').innerHTML = 'Generating...';
+      fetch("https://YOUR_AI_IMAGE_API/generate", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({prompt})
+      })
+      .then(r=>r.json())
+      .then(data=>{
+        if(data.image_url){
+          document.getElementById('ai-image-result').innerHTML = `<img src="${data.image_url}" style="max-width:100%;border

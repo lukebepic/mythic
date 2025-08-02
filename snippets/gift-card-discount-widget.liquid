@@ -1,0 +1,23 @@
+{%- comment -%}
+Gift card and discount code entry for cart/checkout.
+{%- endcomment -%}
+<form class="discount-giftcard-form" id="discount-giftcard-form" autocomplete="off">
+  <label for="discount-code">Discount Code</label>
+  <input type="text" id="discount-code" name="discount" placeholder="Enter discount code">
+  <button type="submit">Apply</button>
+  <div class="discount-status" aria-live="polite"></div>
+</form>
+<script>
+document.getElementById('discount-giftcard-form').onsubmit = function(e) {
+  e.preventDefault();
+  var code = document.getElementById('discount-code').value;
+  var status = this.querySelector('.discount-status');
+  // Shopify does not allow applying discounts via AJAX on the cart page natively.
+  // Use this as a UI helper (or integrate with an app).
+  if (code.length < 3) {
+    status.textContent = "Invalid code.";
+    return;
+  }
+  window.location = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
+};
+</script>

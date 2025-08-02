@@ -1,0 +1,16 @@
+{%- comment -%}
+Buy now / express checkout from anywhere (cart, PDP, quick view, etc).
+{%- endcomment -%}
+<form class="instant-checkout" action="/cart/add" method="post" onsubmit="event.preventDefault(); instantCheckout(this);">
+  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+  <button type="submit">Buy Now</button>
+</form>
+<script>
+  function instantCheckout(form) {
+    const fd = new FormData(form);
+    fetch('/cart/add.js', {method:'POST',body:fd})
+      .then(r=>r.json()).then(d=>{
+        window.location.href = '/checkout';
+      });
+  }
+</script>

@@ -1,0 +1,37 @@
+{%- comment -%}
+AI-powered on-site chatbot / guided shopping assistant.
+Integrate with OpenAI, Google Dialogflow, or similar.
+{%- endcomment -%}
+<div id="ai-chatbot-widget" style="position:fixed;bottom:20px;right:20px;z-index:9999;">
+  <button onclick="toggleChatbot()" style="background:#222;color:#fff;border-radius:50%;width:60px;height:60px;font-size:2em;">💬</button>
+  <div id="ai-chatbot-popup" style="display:none;background:#fff;border:1px solid #ccc;max-width:350px;box-shadow:0 2px 10px #0002;border-radius:10px;">
+    <div style="padding:10px;height:350px;overflow:auto;" id="chatbot-messages"></div>
+    <form onsubmit="sendChatbotMessage();return false;" style="display:flex;">
+      <input id="chatbot-input" type="text" placeholder="Ask me anything..." style="flex:1;padding:7px;border:1px solid #ccc;border-radius:4px 0 0 4px;">
+      <button type="submit" style="padding:7px 16px;">▶</button>
+    </form>
+  </div>
+</div>
+<script>
+function toggleChatbot() {
+  var el = document.getElementById('ai-chatbot-popup');
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+function sendChatbotMessage() {
+  var input = document.getElementById('chatbot-input');
+  var msg = input.value;
+  var messages = document.getElementById('chatbot-messages');
+  if(!msg) return;
+  messages.innerHTML += `<div style="text-align:right;color:#222;margin:5px 0;">${msg}</div>`;
+  input.value = '';
+  fetch('https://YOUR_AI_API_ENDPOINT/chat', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message: msg, user: '{{ customer.email | default: "guest" }}'})
+  })
+  .then(r=>r.json()).then(d=>{
+    messages.innerHTML += `<div style="text-align:left;background:#f5f5f5;border-radius:6px;padding:6px 9px;margin:5px 0;">${d.reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+  });
+}
+</script>

@@ -1,1 +1,67 @@
-<contents omitted for brevity>
+{%- comment -%}
+  Mythic Theme Header
+  - Logo (configurable)
+  - Main navigation
+  - Cart & account links
+  - Responsive/mobile menu
+{%- endcomment -%}
+
+<header class="site-header" role="banner">
+  <a class="skip-link visually-hidden" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+  <div class="header-wrapper">
+    <!-- Logo -->
+    <div class="header-logo">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="100" height="auto" loading="lazy">
+        {%- else -%}
+          <span class="site-title">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="header-nav" role="navigation" aria-label="{{ 'layout.navigation.main' | t }}">
+      <ul>
+        {%- for link in linklists[settings.main_menu].links -%}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Search (optional) -->
+      {%- if settings.enable_search -%}
+        <a href="/search" class="header-search" aria-label="{{ 'layout.header.search' | t }}">
+          <svg width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/><line x1="18" y1="18" x2="22" y2="22" stroke="currentColor"/></svg>
+        </a>
+      {%- endif -%}
+      <!-- Account -->
+      <a href="/account" class="header-account" aria-label="{{ 'layout.header.account' | t }}">
+        <svg width="24" height="24" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" fill="none"/><ellipse cx="12" cy="17" rx="7" ry="4" stroke="currentColor" fill="none"/></svg>
+      </a>
+      <!-- Cart -->
+      <a href="/cart" class="header-cart" aria-label="{{ 'layout.header.cart' | t }}">
+        <svg width="24" height="24" aria-hidden="true"><rect x="6" y="8" width="12" height="10" rx="2" stroke="currentColor" fill="none"/><circle cx="9" cy="20" r="1" fill="currentColor"/><circle cx="15" cy="20" r="1" fill="currentColor"/></svg>
+        <span class="cart-count">{{ cart.item_count }}</span>
+      </a>
+      <!-- Mobile Menu Toggle -->
+      <button class="header-menu-toggle" aria-label="{{ 'layout.header.menu' | t }}">
+        <svg width="24" height="24" aria-hidden="true"><rect y="4" width="24" height="2"/><rect y="11" width="24" height="2"/><rect y="18" width="24" height="2"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile Menu (hidden by default) -->
+  <nav class="mobile-nav" aria-label="{{ 'layout.navigation.mobile' | t }}" hidden>
+    <ul>
+      {%- for link in linklists[settings.main_menu].links -%}
+        <li>
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+</header>

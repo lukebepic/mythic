@@ -1,0 +1,14 @@
+{% comment %}
+  Featured Collections grid, fully toggleable.
+{% endcomment %}
+<section class="featured-collections">
+  <h2>Featured Collections</h2>
+  <div class="collections-grid">
+    {% for collection in collections %}
+      <a href="{{ collection.url }}" class="collection-card">
+        <img src="{{ collection.image | img_url: '400x' }}" alt="{{ collection.title }}">
+        <span>{{ collection.title }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,34 @@
+{%- comment -%}
+Blog index section: lists articles, supports tags and search.
+{%- endcomment -%}
+<section class="blog-index">
+  <h1>{{ blog.title }}</h1>
+  <form method="get" class="blog-search-form">
+    <input type="search" name="q" placeholder="Search articles..." value="{{ search.terms }}">
+    <button type="submit">Search</button>
+  </form>
+  <div class="blog-tags">
+    {% for tag in blog.all_tags %}
+      <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-tag{% if current_tags contains tag %} active{% endif %}">{{ tag }}</a>
+    {% endfor %}
+  </div>
+  <div class="article-list">
+    {% paginate blog.articles by 10 %}
+      {% for article in blog.articles %}
+        <article>
+          <a href="{{ article.url }}">
+            {% if article.image %}
+              <img src="{{ article.image | img_url: '400x' }}" alt="{{ article.title }}">
+            {% endif %}
+            <h2>{{ article.title }}</h2>
+          </a>
+          <div class="article-meta">
+            By {{ article.author }} | {{ article.published_at | date: "%b %d, %Y" }} | {{ article.tags | join: ', ' }}
+          </div>
+          <p>{{ article.excerpt | strip_html | truncate: 150 }}</p>
+        </article>
+      {% endfor %}
+      {{ paginate | default_pagination }}
+    {% endpaginate %}
+  </div>
+</section>

@@ -1,0 +1,27 @@
+{% comment %} Login/Register/Password Reset {% endcomment %}
+<div class="login-section">
+  <h1>Account Login</h1>
+  {% form 'customer_login' %}
+    <input type="email" name="customer[email]" placeholder="Email" required>
+    <input type="password" name="customer[password]" placeholder="Password" required>
+    <button type="submit" class="btn">Login</button>
+  {% endform %}
+  <a href="/account/register">Create account</a> | <a href="/account/login#recover">Forgot password?</a>
+  {% if request.path contains 'register' %}
+    <h2>Create Account</h2>
+    {% form 'create_customer' %}
+      <input type="text" name="customer[first_name]" placeholder="First name" required>
+      <input type="text" name="customer[last_name]" placeholder="Last name" required>
+      <input type="email" name="customer[email]" placeholder="Email" required>
+      <input type="password" name="customer[password]" placeholder="Password" required>
+      <button type="submit" class="btn">Register</button>
+    {% endform %}
+  {% endif %}
+  {% if request.path contains 'recover' %}
+    <h2>Reset Password</h2>
+    {% form 'recover_customer_password' %}
+      <input type="email" name="email" placeholder="Your email" required>
+      <button type="submit" class="btn">Reset</button>
+    {% endform %}
+  {% endif %}
+</div>

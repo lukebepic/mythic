@@ -1,0 +1,24 @@
+{% comment %} Customer Order Details {% endcomment %}
+<div class="order-main">
+  <h1>Order #{{ order.name }}</h1>
+  <div>Placed on {{ order.created_at | date: "%b %d, %Y" }}</div>
+  <div>Status: {{ order.financial_status | capitalize }}, {{ order.fulfillment_status | capitalize }}</div>
+  <div class="order-items">
+    <h2>Items</h2>
+    <ul>
+      {% for item in order.line_items %}
+        <li>{{ item.quantity }} x {{ item.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="order-address">
+    <h2>Shipping Address</h2>
+    <div>{{ order.shipping_address.name }}</div>
+    <div>{{ order.shipping_address.address1 }}</div>
+    <div>{{ order.shipping_address.city }}, {{ order.shipping_address.province_code }} {{ order.shipping_address.zip }}</div>
+    <div>{{ order.shipping_address.country }}</div>
+  </div>
+  <div class="order-total">
+    <h2>Total: {{ order.total_price | money }}</h2>
+  </div>
+</div>

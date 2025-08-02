@@ -1,16 +1,7 @@
-<!-- Product Page Layout -->
-<div class="product-page">
-  <h1>{{ product.title }}</h1>
-  <div class="product-images">
-    {% include 'product-gallery' %}
-  </div>
-  <div class="product-info">
-    {% include 'product-info' %}
-  </div>
-  <div class="product-tabs">
-    {% include 'product-tabs' %}
-  </div>
-  <div class="product-recommendations">
-    {% include 'product-recommendations' %}
-  </div>
-</div>
+{% comment %} Mythic Product Main: Gallery, Info, Tabs, Recommendations, Metafields {% endcomment %}
+<section class="product-main">
+  <div class="product-main__gallery">{% render 'product-gallery', product: product %}</div>
+  <div class="product-main__info">{% render 'product-info', product: product %}</div>
+  <div class="product-main__tabs">{% render 'product-tabs', product: product %}</div>
+  <div class="product-main__recommendations">{% render 'product-recommendations', product: product %}</div>
+</section>

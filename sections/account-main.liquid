@@ -1,0 +1,28 @@
+{% comment %} Customer Account Dashboard {% endcomment %}
+<div class="account-main">
+  <h1>Welcome, {{ customer.first_name }}</h1>
+  <div class="account-nav">
+    <a href="/account">Dashboard</a>
+    <a href="/account/orders">Orders</a>
+    <a href="/account/addresses">Addresses</a>
+    <a href="/account/logout">Logout</a>
+  </div>
+  <div class="account-info">
+    <h2>Profile</h2>
+    <div>Name: {{ customer.first_name }} {{ customer.last_name }}</div>
+    <div>Email: {{ customer.email }}</div>
+    <a href="/account/addresses">Manage Addresses</a>
+  </div>
+  <div class="account-orders">
+    <h2>Order History</h2>
+    {% if customer.orders_count > 0 %}
+      <ul>
+        {% for order in customer.orders %}
+          <li><a href="{{ order.customer_url }}">Order #{{ order.name }} — {{ order.created_at | date: "%b %d, %Y" }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <em>No orders yet.</em>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,19 @@
+{% comment %}
+  Mythic Tomes & Tools - Hero Section
+  Features: toggleable, animated logo or background, headline, CTA.
+  Controlled via 'show_hero_section' setting.
+{% endcomment %}
+{% if settings.show_hero_section %}
+<section class="mythic-hero">
+  <div class="hero-bg">
+    {% if settings.enable_animated_svg %}
+      {% render 'mythic-svg-motifs' %}
+    {% endif %}
+    <div class="hero-content">
+      <h1>Unleash Your Adventure</h1>
+      <p>Discover tomes, tools, and treasures for every campaign.</p>
+      <a href="/collections/all" class="btn">Shop the Collection</a>
+    </div>
+  </div>
+</section>
+{% endif %}

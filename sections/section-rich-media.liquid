@@ -1,0 +1,21 @@
+{%- comment -%}
+Rich Media/Storytelling: Video, parallax, hotspots, lookbook.
+{%- endcomment -%}
+<section class="rich-media-section">
+  <div class="parallax-bg" style="background-image:url('{{ section.settings.bg_image | img_url: '1600x' }}')"></div>
+  <div class="content">
+    <h2>{{ section.settings.heading }}</h2>
+    <video controls poster="{{ section.settings.poster | img_url: '800x' }}">
+      <source src="{{ section.settings.video_url }}" type="video/mp4">
+    </video>
+    <div class="hotspots">
+      {% for spot in section.blocks %}
+        <div class="hotspot" style="left:{{ spot.settings.x }}%;top:{{ spot.settings.y }}%;" title="{{ spot.settings.label }}">
+          <a href="{{ spot.settings.link }}">
+            <span>{{ spot.settings.label }}</span>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

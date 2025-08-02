@@ -1,0 +1,42 @@
+{% comment %} Mythic Single Article Page {% endcomment %}
+<article class="article-main">
+  <h1>{{ article.title }}</h1>
+  <div class="article-meta">
+    By {{ article.author }} | {{ article.published_at | date: "%b %d, %Y" }}
+  </div>
+  {% if article.image %}
+    <img src="{{ article.image | img_url: '800x' }}" alt="{{ article.title }}" class="article-header-img">
+  {% endif %}
+  <div class="article-content">
+    {{ article.content }}
+  </div>
+  <div class="article-tags">
+    {% for tag in article.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+  </div>
+  <div class="article-comments">
+    {% if blog.comments_enabled? %}
+      {% form 'new_comment', article %}
+        <h3>Leave a comment</h3>
+        <textarea name="comment[body]" required></textarea>
+        <button type="submit" class="btn">Post Comment</button>
+      {% endform %}
+      <div class="comments-list">
+        {% for comment in article.comments %}
+          <div class="comment">
+            <div class="comment-author">{{ comment.author }}</div>
+            <div class="comment-body">{{ comment.body }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="related-articles">
+    <h3>Related Posts</h3>
+    {% assign related = blog.articles | where: "id", article.id, false | limit: 3 %}
+    <ul>
+      {% for rel in related %}
+        <li><a href="{{ rel.url }}">{{ rel.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</article>

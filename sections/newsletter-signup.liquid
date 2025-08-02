@@ -1,0 +1,10 @@
+{% comment %}
+  Newsletter signup section, styled as scroll/parchment.
+{% endcomment %}
+<section class="newsletter-signup parchment">
+  <h2>Join the Guild</h2>
+  {% form 'customer', id: 'newsletter-main' %}
+    <input type="email" name="contact[email]" placeholder="Enter your email for quest updates..." required>
+    <button type="submit" class="btn">Subscribe</button>
+  {% endform %}
+</section>

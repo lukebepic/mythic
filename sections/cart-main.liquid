@@ -1,0 +1,11 @@
+<section class="cart-main">
+  <form action="/cart" method="post">
+    {% render 'cart-items', cart: cart %}
+    {% render 'cart-summary', cart: cart %}
+    <div class="cart-note">
+      <label for="cart-note">Order note</label>
+      <textarea name="note" id="cart-note">{{ cart.note }}</textarea>
+    </div>
+    <button type="submit" name="checkout" class="btn btn-checkout">Checkout</button>
+  </form>
+</section>

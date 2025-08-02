@@ -1,0 +1,16 @@
+{%- comment -%}
+Live video shopping event section with real-time buy links.
+{%- endcomment -%}
+<section class="live-shopping">
+  <h2>Live Shopping Event</h2>
+  <video id="live-video" controls autoplay src="{{ section.settings.stream_url }}"></video>
+  <div class="live-products">
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.product_url }}" class="live-product">
+        <img src="{{ block.settings.product_image | img_url: '180x' }}" alt="{{ block.settings.product_title }}">
+        <span>{{ block.settings.product_title }}</span>
+        <button>Buy Now</button>
+      </a>
+    {% endfor %}
+  </div>
+</section>

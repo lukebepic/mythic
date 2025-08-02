@@ -1,1 +1,57 @@
-<div>Cart Drawer Section</div>
+{% comment %}
+  Slide-out cart drawer with upsells, progress bar, notes, badges.
+{% endcomment %}
+<div id="cart-drawer" class="cart-drawer">
+  <button id="close-cart-drawer" aria-label="Close cart">&times;</button>
+  <h2>Your Cart</h2>
+  <div class="cart-items">
+    {% for item in cart.items %}
+      <div class="cart-item">
+        <img src="{{ item.image | img_url: '80x80' }}" alt="{{ item.title }}">
+        <span class="cart-title">{{ item.title }}</span>
+        <span class="cart-qty">x{{ item.quantity }}</span>
+        <span class="cart-price">{{ item.price | money }}</span>
+        <button class="remove-cart-item" data-key="{{ item.key }}" aria-label="Remove">&times;</button>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="cart-progress">
+    {% assign threshold = 5000 %}
+    {% assign percent = cart.total_price | times: 100 | divided_by: threshold %}
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:{{ percent }}%"></div>
+    </div>
+    <span>
+      {% if cart.total_price < threshold %}
+        Spend {{ threshold | minus: cart.total_price | money }} for free shipping!
+      {% else %}
+        You unlocked free shipping!
+      {% endif %}
+    </span>
+  </div>
+  {% if settings.enable_cart_upsell %}
+    <div class="cart-upsell">
+      <h3>Recommended for you</h3>
+      {% render 'product-upsell', product: cart.items.first.product %}
+    </div>
+  {% endif %}
+  <div class="cart-notes">
+    <label for="cart-note">Order notes</label>
+    <textarea id="cart-note" name="note">{{ cart.note }}</textarea>
+  </div>
+  {% if settings.enable_gift_wrap %}
+    <div class="cart-gift-wrap">
+      <label>
+        <input type="checkbox" name="gift_wrap"> Add gift wrap for $5
+      </label>
+    </div>
+  {% endif %}
+  <div class="cart-badges">
+    <img src="{{ 'trust-badge-ssl.svg' | asset_url }}" alt="SSL Secure">
+    <img src="{{ 'trust-badge-guarantee.svg' | asset_url }}" alt="Guarantee">
+  </div>
+  <div class="cart-total">
+    <span>Total: {{ cart.total_price | money }}</span>
+    <button class="btn checkout-btn">Checkout</button>
+  </div>
+</div>

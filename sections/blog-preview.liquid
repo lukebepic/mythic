@@ -1,0 +1,15 @@
+{% comment %}
+  Blog/news preview.
+{% endcomment %}
+<section class="blog-preview">
+  <h2>Latest Lore</h2>
+  <div class="blog-grid">
+    {% for article in blogs.news.articles limit:3 %}
+      <a href="{{ article.url }}" class="blog-card">
+        <img src="{{ article.image | img_url: '400x' }}" alt="{{ article.title }}">
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.excerpt | strip_html | truncate: 100 }}</p>
+      </a>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,29 @@
+{% comment %} Mythic Footer: Menus, newsletter, social, payments, contact, links {% endcomment %}
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-block">
+      <h4>Shop</h4>
+      <ul>{% for link in linklists.footer-menu.links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}</ul>
+    </div>
+    <div class="footer-block">
+      <h4>Info</h4>
+      <ul>{% for link in linklists.info-menu.links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}</ul>
+    </div>
+    <div class="footer-block">
+      {% render 'footer-newsletter' %}
+      {% render 'footer-social' %}
+      {% render 'footer-payments' %}
+    </div>
+    <div class="footer-block footer-contact">
+      <h4>Contact</h4>
+      <div>{{ settings.contact_email }}</div>
+      <div>{{ settings.contact_phone }}</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. All rights reserved.</div>
+    <div>
+      <a href="/policies/privacy-policy">Privacy Policy</a> &middot; <a href="/policies/terms-of-service">Terms</a>
+    </div>
+  </div>
+</footer>

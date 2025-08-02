@@ -1,0 +1,54 @@
+{%- comment -%}
+Article template: featured images, tags, author, reading time, sharing, comments, related articles.
+{%- endcomment -%}
+<article class="article-single">
+  <h1>{{ article.title }}</h1>
+  {% if article.image %}
+    <img src="{{ article.image | img_url: '800x' }}" alt="{{ article.title }}">
+  {% endif %}
+  <div class="article-meta">
+    By {{ article.author }} | {{ article.published_at | date: "%b %d, %Y" }} | 
+    {{ article.tags | join: ', ' }} | 
+    {{ article.content | number_of_words | divided_by: 200 | ceil }} min read
+  </div>
+  <div class="article-content">
+    {{ article.content }}
+  </div>
+  <div class="article-share">
+    <span>Share:</span>
+    <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ article.url }}&text={{ article.title | url_escape }}" target="_blank" rel="noopener">Twitter</a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ article.url }}" target="_blank" rel="noopener">Facebook</a>
+  </div>
+  {% if article.comments_enabled %}
+    <div class="article-comments">
+      {% if article.comments.size > 0 %}
+        <h3>Comments</h3>
+        <ul>
+          {% for comment in article.comments %}
+            <li>
+              <strong>{{ comment.author }}</strong> ({{ comment.created_at | date: "%b %d, %Y" }}):<br>
+              {{ comment.content }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <form method="post" action="{{ article.url }}#comments">
+        <label for="CommentAuthor">Name</label>
+        <input id="CommentAuthor" name="comment[author]" required>
+        <label for="CommentBody">Comment</label>
+        <textarea id="CommentBody" name="comment[body]" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  {% endif %}
+  <div class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+      {% for related_article in blog.articles limit:3 %}
+        {% if related_article.id != article.id %}
+          <li><a href="{{ related_article.url }}">{{ related_article.title }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</article>

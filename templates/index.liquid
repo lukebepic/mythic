@@ -1,0 +1,22 @@
+{% comment %}
+  Homepage template. Add/remove sections as needed, all controlled by settings.
+{% endcomment %}
+{% section 'hero' %}
+{% if settings.show_featured_collections %}
+  {% section 'featured-collections' %}
+{% endif %}
+{% if settings.show_lore_block %}
+  {% section 'lore-block' %}
+{% endif %}
+{% if settings.show_newsletter_signup %}
+  {% section 'newsletter-signup' %}
+{% endif %}
+{% if settings.show_social_feed %}
+  {% section 'social-feed' %}
+{% endif %}
+{% if settings.show_testimonials %}
+  {% section 'testimonials' %}
+{% endif %}
+{% if settings.show_blog_preview %}
+  {% section 'blog-preview' %}
+{% endif %}

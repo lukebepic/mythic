@@ -1,1 +1,20 @@
-<div>Product Upsell Snippet</div>
+{% comment %}
+  Upsell/cross-sell: show hand-picked or recommended products below add-to-cart
+{% endcomment %}
+{% assign upsells = product.metafields.custom.upsell_products | split: ',' %}
+{% if upsells.size > 0 %}
+  <div class="product-upsell">
+    <h3>You may also like</h3>
+    <div class="upsell-grid">
+      {% for handle in upsells %}
+        {% assign upsell_product = all_products[handle] %}
+        {% if upsell_product %}
+          <a href="{{ upsell_product.url }}" class="upsell-card">
+            <img src="{{ upsell_product.featured_image | img_url: '200x' }}" alt="{{ upsell_product.title }}">
+            <span>{{ upsell_product.title }}</span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

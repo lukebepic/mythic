@@ -1,0 +1,11 @@
+{%- comment -%}
+After-sale: Automated reorder incentive, referral link, review reminder.
+{%- endcomment -%}
+{% if customer %}
+  <div class="after-sale-incentives">
+    <h4>Thank you for your order!</h4>
+    <p>Share your referral link for rewards: <input type="text" readonly value="https://{{ shop.domain }}/ref/{{ customer.id }}"></p>
+    <button onclick="window.location.href='/account/reorder?last_order=1'">Reorder Last Purchase</button>
+    <button onclick="window.location.href='/account/reviews'">Leave a Review</button>
+  </div>
+{% endif %}

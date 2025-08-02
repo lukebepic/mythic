@@ -1,0 +1,16 @@
+{%- comment -%}
+Sustainability & trust badges with live data/metafields.
+{%- endcomment -%}
+<div class="sustainability-badges">
+  {% if product.metafields.sustainability.carbon_offset %}
+    <span class="badge">🌱 Carbon Offset: {{ product.metafields.sustainability.carbon_offset }}kg CO₂</span>
+  {% endif %}
+  {% if product.metafields.sustainability.eco_score %}
+    <span class="badge">♻️ Eco Score: {{ product.metafields.sustainability.eco_score }}/10</span>
+  {% endif %}
+  {% if product.metafields.sustainability.certifications %}
+    {% for cert in product.metafields.sustainability.certifications | split: ',' %}
+      <span class="badge">✔️ {{ cert | strip }}</span>
+    {% endfor %}
+  {% endif %}
+</div>

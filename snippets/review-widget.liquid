@@ -1,0 +1,13 @@
+{%- comment -%}
+Simple built-in reviews (or app integration).
+{%- endcomment -%}
+<div class="review-widget">
+  <div class="star-rating">
+    {% assign avg = product.metafields.reviews.rating | default: 4.7 %}
+    <span>{% for i in (1..5) %}{% if i <= avg %}★{% else %}☆{% endif %}{% endfor %}</span>
+    <span>{{ avg }}/5</span>
+  </div>
+  <a href="#reviews">Read all reviews</a>
+  <!-- App block integration: e.g. Yotpo, Loox, Stamped -->
+  {% render 'app-block-reviews' %}
+</div>

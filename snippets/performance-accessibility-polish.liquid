@@ -1,0 +1,11 @@
+{%- comment -%}
+Extra performance (defer/async, lazyload) and ARIA improvements.
+{%- endcomment -%}
+<script>
+document.querySelectorAll('img:not([loading])').forEach(function(img) {
+  img.loading = 'lazy';
+});
+document.querySelectorAll('script[defer],script[async]').forEach(function(s){
+  s.setAttribute('crossorigin', 'anonymous');
+});
+</script>

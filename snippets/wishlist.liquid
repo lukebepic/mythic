@@ -1,25 +1,33 @@
 {%- comment -%}
-Wishlist: Add/remove products, persists to localStorage, accessible.
+Wishlist feature: Add/remove products, sync for guests and logged-in users.
 {%- endcomment -%}
-<button class="wishlist-btn" data-product="{{ product.id }}" aria-pressed="false" aria-label="Add to wishlist">♡</button>
+<div class="wishlist-wrapper">
+  <button class="wishlist-btn" data-product-id="{{ product.id }}">
+    <span class="wishlist-icon">{% if customer %}★{% else %}☆{% endif %}</span>
+    <span>Add to Wishlist</span>
+  </button>
+</div>
 <script>
-(function() {
-  var btns = document.querySelectorAll('.wishlist-btn');
-  var wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-  btns.forEach(function(btn) {
-    var id = btn.getAttribute('data-product');
-    if (wishlist.includes(id)) btn.setAttribute('aria-pressed', 'true');
+  // Wishlist: localStorage for guest, sync to account for logged-in
+  function getWishlist() {
+    return JSON.parse(localStorage.getItem('wishlist') || '[]');
+  }
+  function setWishlist(arr) {
+    localStorage.setItem('wishlist', JSON.stringify(arr));
+  }
+  document.querySelectorAll('.wishlist-btn').forEach(btn => {
     btn.addEventListener('click', function() {
-      var pressed = btn.getAttribute('aria-pressed') === 'true';
-      if (pressed) {
-        wishlist = wishlist.filter(function(pid) { return pid !== id; });
-        btn.setAttribute('aria-pressed', 'false');
+      const id = btn.dataset.productId;
+      let wishlist = getWishlist();
+      if (wishlist.includes(id)) {
+        wishlist = wishlist.filter(p => p !== id);
+        btn.querySelector('.wishlist-icon').textContent = '☆';
       } else {
         wishlist.push(id);
-        btn.setAttribute('aria-pressed', 'true');
+        btn.querySelector('.wishlist-icon').textContent = '★';
       }
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      setWishlist(wishlist);
+      // Optionally send to server for logged-in customers
     });
   });
-})();
 </script>

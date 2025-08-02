@@ -1,0 +1,23 @@
+{%- comment -%}
+Sticky add-to-cart bar shows when product form not visible (mobile best).
+{%- endcomment -%}
+<div class="sticky-atc-bar" id="sticky-atc-bar" style="display:none;">
+  <button class="btn btn-atc">Add to Cart</button>
+</div>
+<script>
+(function() {
+  var bar = document.getElementById('sticky-atc-bar');
+  var form = document.querySelector('form[action^="/cart/add"]');
+  function checkVisibility() {
+    if (!form) return;
+    var rect = form.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) {
+      bar.style.display = 'block';
+    } else {
+      bar.style.display = 'none';
+    }
+  }
+  window.addEventListener('scroll', checkVisibility);
+  window.addEventListener('resize', checkVisibility);
+})();
+</script>

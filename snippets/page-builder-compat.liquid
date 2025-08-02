@@ -1,0 +1,12 @@
+{%- comment -%}
+Optimizations for Shopify Online Store Editor & 3rd-party page builders.
+{%- endcomment -%}
+{% if request.design_mode %}
+  <style>
+    .page-builder-placeholder { border: 2px dashed #888; padding: 1em; text-align: center; }
+  </style>
+  <div class="page-builder-placeholder">
+    Drag and drop blocks here!  
+    <small>Section: {{ section.id }} / Block: {{ block.id }}</small>
+  </div>
+{% endif %}

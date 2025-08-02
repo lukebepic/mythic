@@ -1,0 +1,44 @@
+{%- comment -%}
+Theme Localization Dashboard: Admin interface for managing translations and detecting missing strings.
+{%- endcomment -%}
+{% if customer and customer.tags contains 'admin' %}
+  <div id="localization-dashboard" style="padding:2em;background:#f7f7f7;">
+    <h2>Theme Localization Dashboard</h2>
+    <button onclick="scanThemeStrings()" style="margin-bottom:1em;">Scan for Untranslated Strings</button>
+    <div id="translation-results"></div>
+    <form id="translation-form" style="margin-top:2em;" onsubmit="saveTranslations(event)">
+      <h3>Edit Translations</h3>
+      <div id="translation-fields"></div>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+  <script>
+    function scanThemeStrings() {
+      fetch('/localization/scan.json')
+        .then(r=>r.json()).then(d=>{
+          let html = '<ul>';
+          d.untranslated.forEach(s=>{
+            html += `<li><b>${s.key}</b>: ${s.default}</li>`;
+          });
+          html += '</ul>';
+          document.getElementById('translation-results').innerHTML = html;
+          // Populate translation fields for editing
+          let fields = '';
+          d.strings.forEach(s=>{
+            fields += `
+              <div style="margin:10px 0;">
+                <label>${s.key}</label>
+                <input name="translation[${s.key}]" value="${s.translation || ''}" style="width:300px;">
+              </div>`;
+          });
+          document.getElementById('translation-fields').innerHTML = fields;
+        });
+    }
+    function saveTranslations(e) {
+      e.preventDefault();
+      const form = new FormData(document.getElementById('translation-form'));
+      fetch('/localization/save.json', {method:'POST',body:form});
+      alert('Translations saved!');
+    }
+  </script>
+{% endif %}

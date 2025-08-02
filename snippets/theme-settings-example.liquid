@@ -1,0 +1,18 @@
+{%- comment -%}
+Example: Using theme settings for color, typography, and layout.
+{%- endcomment -%}
+<style>
+body {
+  color: {{ settings.body_text_color }};
+  background: {{ settings.body_bg_color }};
+  font-family: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+}
+.header {
+  background: {{ settings.header_bg_color }};
+}
+.btn {
+  background: {{ settings.button_color }};
+  color: {{ settings.button_text_color }};
+  border-radius: {{ settings.button_radius }}px;
+}
+</style>

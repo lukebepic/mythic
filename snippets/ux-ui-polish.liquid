@@ -1,0 +1,22 @@
+{%- comment -%}
+Extra polish: scroll-to-top button and loading spinner.
+{%- endcomment -%}
+<button id="scroll-to-top" style="display:none;position:fixed;bottom:2em;right:2em;">↑</button>
+<div id="global-loader" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);">
+  <div class="spinner"></div>
+</div>
+<style>
+.spinner { width:2em; height:2em; border:4px solid #ccc; border-top:4px solid #333; border-radius:50%; animation:spin 1s linear infinite;}
+@keyframes spin { to { transform:rotate(360deg); } }
+</style>
+<script>
+window.addEventListener('scroll', function() {
+  document.getElementById('scroll-to-top').style.display = (window.scrollY > 200) ? 'block' : 'none';
+});
+document.getElementById('scroll-to-top').onclick = function() {
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+// Example loader usage for AJAX (call showLoader()/hideLoader())
+function showLoader() { document.getElementById('global-loader').style.display='block'; }
+function hideLoader() { document.getElementById('global-loader').style.display='none'; }
+</script>

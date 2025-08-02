@@ -1,0 +1,17 @@
+{%- comment -%}
+Trust badges, pickup availability, and delivery estimate for product page.
+{%- endcomment -%}
+<div class="product-trust-badges">
+  <img src="{{ 'badge-secure.svg' | asset_url }}" alt="Secure checkout">
+  <img src="{{ 'badge-fast-shipping.svg' | asset_url }}" alt="Fast shipping">
+  <span class="pickup-availability">
+    {% if product.available %}
+      <span>Pickup available at {{ shop.name }}</span>
+    {% else %}
+      <span>Out of stock for pickup</span>
+    {% endif %}
+  </span>
+  <span class="delivery-estimate">
+    Estimated delivery: {{ 'now' | date: "%b %d" }} - {{ 'now' | date: "%b %d" | plus: 5 }}
+  </span>
+</div>

@@ -1,0 +1,25 @@
+{%- comment -%}
+Sticky add-to-cart bar for product page (shows as user scrolls past main form).
+{%- endcomment -%}
+<div id="StickyATC-{{ section.id }}" class="sticky-atc" style="display:none;">
+  <img src="{{ product.featured_image | img_url: '80x' }}" alt="{{ product.title }}">
+  <div>
+    <strong>{{ product.title }}</strong><br>
+    <span class="price">{{ product.selected_or_first_available_variant.price | money }}</span>
+  </div>
+  <form action="/cart/add" method="post">
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    <input type="number" name="quantity" value="1" min="1">
+    <button type="submit" class="add-to-cart">Add to Cart</button>
+  </form>
+</div>
+<script>
+  // Show sticky bar when main form scrolled out of view
+  const atc = document.getElementById('StickyATC-{{ section.id }}');
+  const mainForm = document.getElementById('ProductForm-{{ section.id }}');
+  window.addEventListener('scroll', function() {
+    if (!mainForm || !atc) return;
+    let rect = mainForm.getBoundingClientRect();
+    atc.style.display = rect.bottom < 0 ? '' : 'none';
+  });
+</script>

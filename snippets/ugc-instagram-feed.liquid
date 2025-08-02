@@ -1,0 +1,19 @@
+{%- comment -%}
+Integrated UGC & Social Shopping: Instagram/TikTok/Facebook feed as shoppable gallery.
+{%- endcomment -%}
+<div id="ugc-social-feed" style="margin:2em 0;">
+  <h3>Shop Social Looks</h3>
+  <div id="ugc-feed-items" style="display:flex;gap:1em;flex-wrap:wrap;"></div>
+</div>
+<script>
+  fetch('https://api.yoursocialplugin.com/instagram-feed?shop={{ shop.domain }}')
+    .then(r=>r.json()).then(data=>{
+      let html = '';
+      data.posts.forEach(p=>{
+        html += `<a href="${p.product_url}" target="_blank" style="display:block;">
+          <img src="${p.image}" alt="UGC Post" style="width:120px;height:120px;object-fit:cover;">
+        </a>`;
+      });
+      document.getElementById('ugc-feed-items').innerHTML = html;
+    });
+</script>

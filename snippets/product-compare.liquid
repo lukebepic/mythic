@@ -1,0 +1,25 @@
+{%- comment -%}
+Product compare: Add/remove products to a comparison list, show modal/drawer.
+{%- endcomment -%}
+<button class="compare-btn" data-product="{{ product.id }}" aria-pressed="false" aria-label="Add to compare">⇄</button>
+<script>
+(function() {
+  var btns = document.querySelectorAll('.compare-btn');
+  var compare = JSON.parse(localStorage.getItem('compare') || '[]');
+  btns.forEach(function(btn) {
+    var id = btn.getAttribute('data-product');
+    if (compare.includes(id)) btn.setAttribute('aria-pressed', 'true');
+    btn.addEventListener('click', function() {
+      var pressed = btn.getAttribute('aria-pressed') === 'true';
+      if (pressed) {
+        compare = compare.filter(function(pid) { return pid !== id; });
+        btn.setAttribute('aria-pressed', 'false');
+      } else {
+        compare.push(id);
+        btn.setAttribute('aria-pressed', 'true');
+      }
+      localStorage.setItem('compare', JSON.stringify(compare));
+    });
+  });
+})();
+</script>

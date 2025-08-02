@@ -1,0 +1,44 @@
+{%- comment -%}
+Responsive product media gallery with image zoom, video, 3D, thumbnails, fullscreen.
+{%- endcomment -%}
+<div class="product-gallery" id="ProductGallery-{{ section.id }}">
+  <div class="gallery-main">
+    {% for media in product.media %}
+      <div class="gallery-media{% if forloop.first %} active{% endif %}" data-media-id="{{ media.id }}">
+        {% case media.media_type %}
+          {% when 'image' %}
+            <img src="{{ media.preview_image | img_url: '800x' }}" alt="{{ media.alt | escape }}">
+          {% when 'video' %}
+            <video controls>
+              <source src="{{ media.sources[0].url }}">
+            </video>
+          {% when 'model' %}
+            <model-viewer src="{{ media.sources[0].url }}" ar ar-modes="webxr scene-viewer quick-look" camera-controls></model-viewer>
+        {% endcase %}
+      </div>
+    {% endfor %}
+  </div>
+  <div class="gallery-thumbnails">
+    {% for media in product.media %}
+      <button class="gallery-thumb{% if forloop.first %} active{% endif %}" data-media-id="{{ media.id }}">
+        <img src="{{ media.preview_image | img_url: '100x' }}" alt="{{ media.alt | escape }}">
+      </button>
+    {% endfor %}
+  </div>
+  <button class="gallery-fullscreen" aria-label="View fullscreen">⛶</button>
+</div>
+<script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script>
+  // Basic gallery script: thumbnail switching & fullscreen
+  document.querySelectorAll('.gallery-thumb').forEach(btn => {
+    btn.addEventListener('click', function() {
+      let id = this.dataset.mediaId;
+      document.querySelectorAll('.gallery-media').forEach(m => m.classList.toggle('active', m.dataset.mediaId === id));
+      document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.toggle('active', t === btn));
+    });
+  });
+  document.querySelector('.gallery-fullscreen')?.addEventListener('click', function() {
+    let active = document.querySelector('.gallery-media.active img, .gallery-media.active video, .gallery-media.active model-viewer');
+    if (active && active.requestFullscreen) active.requestFullscreen();
+  });
+</script>

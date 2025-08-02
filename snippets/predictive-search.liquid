@@ -1,0 +1,36 @@
+{%- comment -%}
+Predictive search dropdown for products, pages, articles with accessibility and mobile support.
+{%- endcomment -%}
+<form class="predictive-search-form" role="search" action="/search" method="get" autocomplete="off">
+  <input type="search" id="SearchInput" name="q" placeholder="Search for products, pages, articles..." aria-label="Search" autocomplete="off">
+  <div id="PredictiveResults" class="predictive-search-results" role="listbox" aria-expanded="false"></div>
+</form>
+<script>
+  let timer;
+  document.getElementById('SearchInput')?.addEventListener('input', function(e) {
+    clearTimeout(timer);
+    const query = e.target.value;
+    if (query.length < 2) {
+      document.getElementById('PredictiveResults').innerHTML = '';
+      return;
+    }
+    timer = setTimeout(() => {
+      fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,page,article`)
+        .then(r => r.json())
+        .then(data => {
+          let html = '';
+          ['products', 'pages', 'articles'].forEach(type => {
+            if (data.resources[type].results.length) {
+              html += `<div class="predictive-group"><strong>${type.charAt(0).toUpperCase() + type.slice(1)}</strong><ul>`;
+              data.resources[type].results.forEach(res => {
+                html += `<li><a href="${res.url}" tabindex="0">${res.title}</a></li>`;
+              });
+              html += '</ul></div>';
+            }
+          });
+          document.getElementById('PredictiveResults').innerHTML = html || '<div>No results found</div>';
+          document.getElementById('PredictiveResults').setAttribute('aria-expanded', !!html);
+        });
+    }, 200);
+  });
+</script>

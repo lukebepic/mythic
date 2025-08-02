@@ -1,0 +1,18 @@
+{%- comment -%}
+Semantic/NLP-powered search suggestions (using 3rd party API or Shopify Search & Discovery app).
+{%- endcomment -%}
+<form id="semantic-search-form" action="/search" method="get" autocomplete="off">
+  <input type="search" name="q" id="semantic-search-input" placeholder="Search for anything...">
+  <div id="semantic-suggestions"></div>
+</form>
+<script>
+  document.getElementById('semantic-search-input').addEventListener('input', function(e){
+    const q = e.target.value;
+    if (q.length < 3) return document.getElementById('semantic-suggestions').innerHTML = '';
+    fetch('https://api.your-nlp-search.com/suggest?q=' + encodeURIComponent(q))
+      .then(r=>r.json()).then(data=>{
+        document.getElementById('semantic-suggestions').innerHTML =
+          data.suggestions.map(s => `<div><a href="/search?q=${encodeURIComponent(s)}">${s}</a></div>`).join('');
+      });
+  });
+</script>

@@ -1,0 +1,19 @@
+{%- comment -%}
+Shoppable video block with product hotspots.
+{%- endcomment -%}
+<div class="shoppable-video">
+  <video id="shoppable-vid" controls poster="{{ block.settings.poster | img_url: '800x' }}">
+    <source src="{{ block.settings.video_url }}" type="video/mp4">
+  </video>
+  <div id="video-hotspots">
+    {% for spot in block.settings.hotspots %}
+      <a class="hotspot" style="left:{{ spot.x }}%;top:{{ spot.y }}%;" href="{{ spot.product_url }}">
+        <img src="{{ spot.product_image | img_url: '60x' }}" alt="Shop {{ spot.product_title }}">
+        <span>{{ spot.product_title }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+<script>
+  // JS for interactive product hotspots (optional: timed appearance)
+</script>

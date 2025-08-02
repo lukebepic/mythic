@@ -1,1 +1,16 @@
-<div>Product Reviews Snippet</div>
+{% comment %}
+  Full reviews block
+{% endcomment %}
+<div class="product-reviews">
+  {% if product.metafields.reviews.reviews %}
+    {% for review in product.metafields.reviews.reviews %}
+      <div class="review">
+        <div class="review-author">{{ review.author }}</div>
+        <div class="review-rating">{{ review.rating }}★</div>
+        <div class="review-body">{{ review.body }}</div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <em>No reviews yet. Be the first to share your quest!</em>
+  {% endif %}
+</div>

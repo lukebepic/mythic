@@ -1,0 +1,30 @@
+{%- comment -%}
+Theme settings/presets: color schemes, typography, save/share/export.
+{%- endcomment -%}
+<style>
+  :root {
+    --color-primary: {{ settings.color_primary }};
+    --color-accent: {{ settings.color_accent }};
+    --color-bg: {{ settings.color_bg }};
+    --font-heading: {{ settings.font_heading.family }}, sans-serif;
+    --font-body: {{ settings.font_body.family }}, sans-serif;
+  }
+</style>
+<script>
+  // Example: Save/export theme settings as JSON
+  function exportThemeSettings() {
+    const settings = {
+      color_primary: '{{ settings.color_primary }}',
+      color_accent: '{{ settings.color_accent }}',
+      color_bg: '{{ settings.color_bg }}',
+      font_heading: '{{ settings.font_heading.family }}',
+      font_body: '{{ settings.font_body.family }}'
+    };
+    const blob = new Blob([JSON.stringify(settings, null, 2)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'theme-settings.json';
+    a.click();
+  }
+</script>
+<button onclick="exportThemeSettings()">Export Theme Preset</button>

@@ -1,1 +1,13 @@
-<div>Product Swatches Snippet</div>
+{% comment %}
+  Custom swatch buttons for dice color, cover, etc.
+{% endcomment %}
+{% for option in product.options_with_values %}
+  {% if option.name contains 'Color' or option.name contains 'Cover' %}
+    <div class="swatch-group">
+      <span>{{ option.name }}</span>
+      {% for value in option.values %}
+        <button class="swatch-btn" data-value="{{ value | escape }}">{{ value }}</button>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %}

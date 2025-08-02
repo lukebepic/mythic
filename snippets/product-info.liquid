@@ -1,0 +1,30 @@
+<h1 class="product-title">{{ product.title }}</h1>
+<div class="product-badges">
+  {% if product.metafields.custom.badge %}
+    <span class="badge">{{ product.metafields.custom.badge.value }}</span>
+  {% endif %}
+</div>
+<div class="product-price">
+  {% if product.compare_at_price > product.price %}
+    <span class="product-price--sale">{{ product.price | money }}</span>
+    <span class="product-price--compare">{{ product.compare_at_price | money }}</span>
+  {% else %}
+    <span>{{ product.price | money }}</span>
+  {% endif %}
+</div>
+<form method="post" action="/cart/add">
+  {% for option in product.options_with_values %}
+    <label>{{ option.name }}</label>
+    <select name="options[{{ option.name }}]">
+      {% for value in option.values %}
+        <option value="{{ value }}">{{ value }}</option>
+      {% endfor %}
+    </select>
+  {% endfor %}
+  <input type="number" name="quantity" value="1" min="1" max="{{ product.selected_or_first_available_variant.inventory_quantity }}">
+  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+  <button type="submit" class="btn btn-atc">Add to cart</button>
+</form>
+{% if product.metafields.custom.info %}
+  <div class="product-metafield">{{ product.metafields.custom.info.value }}</div>
+{% endif %}

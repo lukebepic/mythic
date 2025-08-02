@@ -1,0 +1,38 @@
+{%- comment -%}
+Quick order table: for B2B/wholesale, enables fast bulk add to cart.
+{%- endcomment -%}
+<table class="quick-order-table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>SKU</th>
+      <th>Price</th>
+      <th>Qty</th>
+      <th>Add</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in collections['b2b'].products %}
+      <tr>
+        <td>{{ product.title }}</td>
+        <td>{{ product.variants.first.sku }}</td>
+        <td>{{ product.price | money }}</td>
+        <td><input type="number" name="qty-{{ product.id }}" min="1" value="1"></td>
+        <td>
+          <button class="quick-order-add" data-product="{{ product.variants.first.id }}">Add</button>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script>
+document.querySelectorAll('.quick-order-add').forEach(function(btn) {
+  btn.onclick = function() {
+    var id = btn.getAttribute('data-product');
+    var qty = btn.closest('tr').querySelector('input[type=number]').value;
+    // AJAX add to cart call here
+    // fetch('/cart/add.js', { method: 'POST', body: new URLSearchParams({id, quantity:qty}) })
+    //   .then(r=>r.json()).then(()=>alert('Added!'));
+  };
+});
+</script>

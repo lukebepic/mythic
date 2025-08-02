@@ -1,0 +1,31 @@
+{%- comment -%}
+Advanced performance monitoring: Core Web Vitals, error reporting, admin alerts (JS-only).
+{%- endcomment -%}
+<script>
+(function(){
+  if(window.location.pathname.indexOf('/admin') !== -1) return;
+  function sendPerf(name, value) {
+    fetch('https://YOUR_MONITORING_ENDPOINT/vitals', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({name, value, path: window.location.pathname, user: '{{ customer.email | default: "guest" }}'})
+    });
+  }
+  // Core Web Vitals
+  import('https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js').then(({webVitals}) => {
+    webVitals.getCLS(sendPerf);
+    webVitals.getFID(sendPerf);
+    webVitals.getLCP(sendPerf);
+    webVitals.getFCP(sendPerf);
+    webVitals.getTTFB(sendPerf);
+  });
+  // JS error monitoring
+  window.onerror = function(msg, url, line, col, error) {
+    fetch('https://YOUR_MONITORING_ENDPOINT/errors', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({msg, url, line, col, error: error && error.stack, path: window.location.pathname})
+    });
+  };
+})();
+</script>

@@ -1,1 +1,11 @@
-<div>Product Inventory Snippet</div>
+{% comment %}
+  Inventory/stock status
+{% endcomment %}
+{% if product.available %}
+  <span class="inventory in-stock">In stock</span>
+  {% if product.variants.first.inventory_quantity < 5 %}
+    <span class="inventory low-stock">Only {{ product.variants.first.inventory_quantity }} left!</span>
+  {% endif %}
+{% else %}
+  <span class="inventory out-stock">Out of stock</span>
+{% endif %}

@@ -1,0 +1,18 @@
+{%- comment -%}
+Voice search input for header/main search.
+{%- endcomment -%}
+<form class="voice-search-form" action="/search" method="get">
+  <input type="search" name="q" id="voice-search-input" placeholder="Search products...">
+  <button type="button" onclick="startVoiceSearch()">🎤</button>
+</form>
+<script>
+  function startVoiceSearch() {
+    if (!('webkitSpeechRecognition' in window)) return alert('Voice search not supported.');
+    const r = new webkitSpeechRecognition();
+    r.lang = 'en-US';
+    r.start();
+    r.onresult = function(e) {
+      document.getElementById('voice-search-input').value = e.results[0][0].transcript;
+    };
+  }
+</script>

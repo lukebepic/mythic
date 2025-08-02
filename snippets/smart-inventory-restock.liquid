@@ -1,0 +1,32 @@
+{%- comment -%}
+Smart Inventory & Restock Alerts: Notify me logic, low-inventory banners, "back soon" messaging.
+{%- endcomment -%}
+{% if product.available == false %}
+  <div class="restock-alert" style="background:#fff3cd;padding:1em;margin:1em 0;border-radius:7px;">
+    <b>Out of Stock</b> – Notify me when available:
+    <form onsubmit="restockNotify(event)">
+      <input type="email" name="restock_email" placeholder="Your email" required>
+      <button type="submit">Notify Me</button>
+    </form>
+    <div id="restock-response"></div>
+  </div>
+  <script>
+    function restockNotify(e){
+      e.preventDefault();
+      var email = e.target.restock_email.value;
+      fetch('https://YOUR_NOTIFY_API/restock', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({product:'{{ product.title }}',email:email})
+      })
+      .then(r=>r.json())
+      .then(resp=>{
+        document.getElementById('restock-response').textContent = resp.success ? "You'll be notified!" : "Error, try again.";
+      });
+    }
+  </script>
+{% elsif product.inventory_quantity and product.inventory_quantity <= 5 %}
+  <div class="low-inventory-banner" style="background:#ffeaea;padding:0.6em;margin:1em 0;border-radius:6px;">
+    <b>Hurry!</b> Only {{ product.inventory_quantity }} left in stock.
+  </div>
+{% endif %}

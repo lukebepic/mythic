@@ -1,0 +1,25 @@
+{%- comment -%}
+Product form with variants, swatches, quantity, add-to-cart, and buy now.
+{%- endcomment -%}
+<form id="ProductForm-{{ section.id }}" action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+  <div class="product-variants">
+    {% for option in product.options_with_values %}
+      <fieldset>
+        <legend>{{ option.name }}</legend>
+        <div class="swatches">
+          {% for value in option.values %}
+            <label class="swatch{% if option.selected_value == value %} selected{% endif %}">
+              <input type="radio" name="options[{{ option.name }}]" value="{{ value }}" {% if option.selected_value == value %}checked{% endif %}>
+              <span>{{ value }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+    {% endfor %}
+  </div>
+  <label for="Quantity-{{ section.id }}">Quantity</label>
+  <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1">
+  <button type="submit" class="add-to-cart">Add to Cart</button>
+  <button type="submit" name="checkout" class="buy-now">Buy Now</button>
+</form>

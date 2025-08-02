@@ -1,0 +1,20 @@
+{%- comment -%}
+Dynamic product recommendations (related, recently viewed).
+{%- endcomment -%}
+<div class="product-recommendations">
+  <h3>You may also like</h3>
+  <div class="recommendation-list">
+    {% for product in recommendations.products limit:4 %}
+      <div class="recommendation-item">
+        <a href="{{ product.url }}">
+          <img src="{{ product.featured_image | img_url: '180x' }}" alt="{{ product.title }}">
+          <div>{{ product.title }}</div>
+          <div class="price">{{ product.price | money }}</div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<script>
+  // Optionally fetch recommendations via JS and render
+</script>

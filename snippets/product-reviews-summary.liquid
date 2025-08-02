@@ -1,1 +1,9 @@
-<div>Product Reviews Summary Snippet</div>
+{% comment %}
+  Review summary for product (stars, count)
+{% endcomment %}
+{% if product.metafields.reviews.rating %}
+  <div class="review-summary">
+    <span class="stars">{{ product.metafields.reviews.rating }}★</span>
+    <span class="review-count">({{ product.metafields.reviews.count }} reviews)</span>
+  </div>
+{% endif %}

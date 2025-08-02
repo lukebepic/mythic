@@ -1,0 +1,23 @@
+{%- comment -%}
+Custom product options (e.g. engraving, gift wrap) with accessibility and AJAX.
+{%- endcomment -%}
+<form id="product-custom-options" class="product-custom-options">
+  <fieldset>
+    <legend>Personalization</legend>
+    <label for="engraving">Engraving (optional)</label>
+    <input type="text" id="engraving" name="properties[Engraving]" maxlength="20" aria-describedby="engraving-help">
+    <small id="engraving-help">Max 20 characters.</small>
+  </fieldset>
+  <fieldset>
+    <legend>Gift Options</legend>
+    <label>
+      <input type="checkbox" name="properties[Gift Wrap]" value="Yes">
+      Add gift wrap
+    </label>
+  </fieldset>
+</form>
+<script>
+document.getElementById('product-custom-options').addEventListener('change', function(e) {
+  // Optionally, trigger price updates or validations here
+});
+</script>

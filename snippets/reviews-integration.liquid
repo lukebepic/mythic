@@ -1,0 +1,12 @@
+{%- comment -%}
+Review app integration (Loox, Shopify Product Reviews, etc.)
+{%- endcomment -%}
+<div class="product-reviews" id="shopify-product-reviews" data-id="{{ product.id }}">
+  {% if shop.metafields.loox.enabled %}
+    <!-- Loox widget -->
+    <div class="loox-rating" data-id="{{ product.id }}"></div>
+  {% else %}
+    <!-- Shopify Product Reviews -->
+    <div id="shopify-product-reviews" data-id="{{ product.id }}"></div>
+  {% endif %}
+</div>

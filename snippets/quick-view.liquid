@@ -1,0 +1,21 @@
+{%- comment -%}
+Quick Shop/Quick View modal for fast product preview and AJAX ATC.
+{%- endcomment -%}
+<div id="QuickViewModal" class="quick-view-modal" style="display:none;">
+  <button class="close" onclick="document.getElementById('QuickViewModal').style.display='none'">&times;</button>
+  <div id="QuickViewContent">
+    <!-- Filled by JS -->
+  </div>
+</div>
+<script>
+  // Usage: <button class="quick-view-btn" data-handle="product-handle">Quick View</button>
+  document.querySelectorAll('.quick-view-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      fetch('/products/' + btn.dataset.handle + '?view=quick')
+        .then(r=>r.text()).then(html=>{
+          document.getElementById('QuickViewContent').innerHTML = html;
+          document.getElementById('QuickViewModal').style.display = 'block';
+        });
+    });
+  });
+</script>

@@ -1,1 +1,18 @@
-<div>Product Tabs Snippet</div>
+<div class="product-tabs">
+  <ul class="tabs-nav" role="tablist">
+    <li class="active" data-tab="desc" role="tab" aria-selected="true" aria-controls="desc">Description</li>
+    <li data-tab="details" role="tab" aria-controls="details">Details</li>
+    <li data-tab="reviews" role="tab" aria-controls="reviews">Reviews</li>
+  </ul>
+  <div class="tab-content active" id="desc" role="tabpanel">{{ product.description }}</div>
+  <div class="tab-content" id="details" role="tabpanel">
+    {% if product.metafields.custom.details %}
+      {{ product.metafields.custom.details.value }}
+    {% else %}
+      <p>No additional details.</p>
+    {% endif %}
+  </div>
+  <div class="tab-content" id="reviews" role="tabpanel">
+    <div id="shopify-product-reviews" data-id="{{ product.id }}"></div>
+  </div>
+</div>
